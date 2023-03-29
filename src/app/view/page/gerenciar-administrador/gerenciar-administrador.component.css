@@ -1,0 +1,35 @@
+.imagem {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: 1em;
+  background-image: linear-gradient(180deg, #2ec680, #3c11cb);
+  color: white;
+}
+
+.icon{
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+}
+
+.vermelho{
+  background-color: #ff6643;
+}
+.verde{
+  background-color: #84e0be;
+}
+
+.titulo{
+  display: block;
+  text-align: center;
+}

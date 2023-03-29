@@ -1,0 +1,8 @@
+<div class="input-form-text">
+  <div class="label" [ngClass]="{'label-disabled':disabled}">{{label}}</div>
+  <div class="input" [ngClass]="{ 'input-selected': selected }">
+    <input [type]="type" [disabled]="disabled" size="" (focus)="focusFunction()" (focusout)="focusOutFunction()"
+      (blur)="blur.emit($event)" (keyup)="keyup.emit($event)" [(ngModel)]="inputTextValue" [name]="name" [id]="id"
+      (ngModelChange)="inputTextValueChange.emit(inputTextValue)" [placeholder]="placeholder" [mask]="mask">
+  </div>
+</div>

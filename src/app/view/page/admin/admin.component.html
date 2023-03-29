@@ -1,0 +1,57 @@
+<div class="header">
+  <app-header></app-header>
+</div>
+<div class="aluno-tela">
+  <div class="menu-lateral">
+    <div class="menu-cabecalho">
+      <div class="imagem">{{ usuario.name | doisCharacters }}</div>
+      <div class="nome">{{ usuario.name }}</div>
+      <div class="email">{{ usuario.email }}</div>
+    </div>
+    <div class="menu-conteudo">
+      <div class="menu-item">
+        <span class="menu-item-texto" routerLink="/admin/dashboard"
+          >Dashboard</span
+        >
+      </div>
+      <div class="menu-item">
+        <span class="menu-item-texto" routerLink="/admin/gerenciar"
+          >Gerenciar Usuários</span
+        >
+      </div>
+      <div class="menu-item">
+        <span class="menu-item-texto" routerLink="/admin/gerenciar/curso"
+          >Gerenciar Cursos</span
+        >
+      </div>
+      <!-- <div class="menu-item"><span class="menu-item-texto" routerLink="/admin/pendente/usuario">Usuário Pendentes</span></div>
+      <div class="menu-item"><span class="menu-item-texto" routerLink="/admin/pendente/documento">Documentos Pendentes</span></div> -->
+      <div class="menu-item">
+        <span class="menu-item-texto" routerLink="/admin/documentos-contratuais"
+          >Documentos Contratuais</span
+        >
+      </div>
+      <div class="menu-item">
+        <span class="menu-item-texto" routerLink="/admin/marketing"
+          >Marketing</span
+        >
+      </div>
+      <div class="menu-item">
+        <span class="menu-item-texto" routerLink="/admin/reset-senha"
+          >Reset de Senha</span
+        >
+      </div>
+      <div class="menu-item">
+        <span class="menu-item-texto" (click)="deslogar()"
+          >Sair <i class="fas fa-sign-out-alt"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+  <div class="conteudo">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<div class="footer" style="justify-self: end">
+  <app-footer [footerUp]="false"></app-footer>
+</div>

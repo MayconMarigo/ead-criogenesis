@@ -1,0 +1,10 @@
+<h2>{{tituloMensagem()}}</h2>
+<hr>
+<p>Sua pontuação: <b [ngClass]="{'text-success': resultado.pass, 'text-danger': !resultado.pass}">{{resultado.score}}%</b>!</p>
+<div class="container-fluid">
+  <div class="row justify-content-end">
+    <div class="col-md-4">
+      <button class="btn btn-block btn-danger" [matDialogClose]="true">Fechar</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="tela-deposito">
+  <div class="titulo">Dados para Depósito</div>
+  <div class="row">
+    <div class="col-md-10"></div>
+    <div class="col-md-6 mb-2 input-form">
+      <label class="label" for="nome">Nome Favorecido:</label>
+      <mat-form-field appearance="outline">
+        <input class="input" matInput type="text" [(ngModel)]="dadosDeposito.name" name="nome" #nome="ngModel"
+          id="nome">
+      </mat-form-field>
+    </div>
+    <div class="col-md-6 mb-2 input-form">
+      <label class="label" for="cpf">CPF:</label>
+      <mat-form-field appearance="outline">
+        <input class="input" matInput type="text" [(ngModel)]="dadosDeposito.cpf" name="cpf" #cpf="ngModel" id="cpf"
+          mask="000.000.000-00" (blur)="validarCpf(cpf)">
+          <mat-error *ngIf="cpf.errors?.cpfInvalido">CPF inválido</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-lg-4 mb-2 input-form">
+      <label class="label" for="bank">Código do Banco:</label>
+      <!-- <mat-form-field appearance="outline">
+        <input class="input" matInput type="text" [(ngModel)]="dadosDeposito.bank" name="bank" #bank="ngModel"
+          id="bank">
+      </mat-form-field> -->
+      <mat-form-field appearance="outline" hideRequiredMarker>
+        <mat-select [(ngModel)]="dadosDeposito.bank" name="bank" #bank="ngModel" id="bank" (openedChange)="triggerEvent($event, buscarBanco)">
+          <mat-form-field class="ml-3 mt-3">
+            <mat-label>Buscar</mat-label>
+            <input class="input" matInput type="text" #buscarBanco (keyup)="filtrarBanco(buscarBanco)" (keydown)="$event.stopPropagation()">
+          </mat-form-field>
+          <mat-option [value]="banco.COMPE" *ngFor="let banco of listaBancosFiltrados">{{banco.COMPE + ' - ' + banco.LongName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 mb-2 input-form">
+      <label class="label" for="branch">Agência:</label>
+      <mat-form-field appearance="outline">
+        <input class="input" matInput type="text" [(ngModel)]="dadosDeposito.branch" name="branch" #branch="ngModel"
+          id="branch">
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 mb-2 input-form">
+      <label class="label" for="account">Conta:</label>
+      <mat-form-field appearance="outline">
+        <input class="input" matInput type="text" [(ngModel)]="dadosDeposito.account" name="account" #account="ngModel"
+          id="account">
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 mb-2 input-form">
+      <label class="label" for="pixType">Tipo PIX:</label>
+      <mat-form-field appearance="outline">
+        <mat-select [(ngModel)]="dadosDeposito.pixType" name="pixType" #pixType="ngModel" required id="pixType">
+          <mat-option value="0">CPF / CNPJ</mat-option>
+          <mat-option value="1">Celular</mat-option>
+          <mat-option value="2">E-mail</mat-option>
+          <mat-option value="3">Aleatória</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-8 mb-2 input-form">
+      <label class="label" for="pix">Código do PIX:</label>
+      <mat-form-field appearance="outline">
+        <input class="input" matInput type="text" [(ngModel)]="dadosDeposito.pix" name="pix" #pix="ngModel" id="pix"
+          [mask]="dadosDeposito.pixType == 0 ? 'CPF_CNPJ' : dadosDeposito.pixType == 1 ? '(00) 00000-0000' : 'A*'"
+          (blur)="validarPix(pix)">
+        <mat-error *ngIf="pix.errors?.emailInvalido">E-mail inválido</mat-error>
+        <mat-error *ngIf="pix.errors?.cpfInvalido">CPF inválido</mat-error>
+        <mat-error *ngIf="pix.errors?.cnpjInvalido">CNPJ inválido</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-lg-8"></div>
+    <div class="col-lg-4">
+      <!-- <button class="btn btn-block botao-color-2" (click)="salvar()">Salvar</button> -->
+      <button class="btn btn-block botao-color-2 flex justify-content-center" (click)="salvar()" [disabled]="saveLoading">
+        <mat-spinner [diameter]="20" *ngIf="saveLoading"></mat-spinner>
+        <span *ngIf="!saveLoading">Salvar</span>
+      </button>
+    </div>
+  </div>
+</div>

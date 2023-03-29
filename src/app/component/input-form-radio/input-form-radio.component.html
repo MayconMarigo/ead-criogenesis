@@ -1,0 +1,8 @@
+<div class="flex flex-direction-row" style="flex-wrap: wrap; height: 100%;">
+  <div class="input-form-radio mb-1" *ngFor="let radio of radios">
+    <div class="quadrado" [ngClass]="{'quadrado-toggle':estaSelecionado(radio.value)}" [ngStyle]="{'border-color': !value && submitted ? 'red' : null}" (click)="selecionar(radio.value)">
+        <i class="fas fa-check icon" [ngStyle]="{'visibility': estaSelecionado(radio.value) ? 'visible' : 'hidden'}"></i>
+    </div>
+    <div class="nome" [ngClass]="{'text-danger': !value && submitted}">{{radio.name}}</div>
+  </div>
+</div>

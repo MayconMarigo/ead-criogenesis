@@ -1,0 +1,64 @@
+<span class="titulo">Aprovação de Documentos</span>
+<table class="tabela">
+  <thead>
+    <tr>
+      <th scope="col" class="bold">Usuários</th>
+      <th scope="col" class="bold" colspan="2">Documentos</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let aluno of listaAlunos">
+    <tr class="cursor">
+      <td class="border-right border-bottom pointer" (click)="selecionarAluno(aluno.id)">
+        <div class="row align-items-center">
+          <div class="imagem mr-3">{{aluno.name | doisCharacters}}</div>
+          <span class="texto-color">{{aluno.name}}</span>
+        </div>
+      </td>
+      <td class="border-right border-bottom pointer" (click)="selecionarAluno(aluno.id)">
+        <div style="display: flex; justify-content: center;">
+          <span class="bold">{{existePendente(aluno.documents) ? 'Pendência de aprovação' :'Ausência de documento'}}</span>
+        </div>
+      </td>
+      <td class="border-bottom" (click)="aprovarAluno(aluno.id)">
+        <div class="row align-items-center justify-content-around">
+          <div class="icon cor mb-1">
+            <i class="fas fa-check"></i>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr *ngFor="let documento of aluno.documents" [ngStyle]="{'display': expandirUsuario(aluno.id) ? null:'none'}">
+      <td class="border-right border-bottom" [ngClass]="{'pointer': !(documento.status == null)}" (click)="visualizarImagem(documento)">
+        <div style="display: flex; flex-direction: row; align-items: center;">
+          <i class="fas fa-file-alt" style="font-size: 1.5em; color: #c2bebe;"></i>
+          <span class="ml-3">{{documento.name}}</span>
+        </div>
+      </td>
+      <td class="border-right border-bottom" *ngIf="documento.status == '0'">
+        <div style="display: flex; justify-content: center;">
+          <span class="bold text-warning">{{formartarStatus(documento.status)}}</span>
+        </div>
+      </td>
+      <td class="border-right border-bottom" colspan="2" *ngIf="documento.status != '0'">
+        <div style="display: flex; justify-content: center;">
+          <span class="bold" [ngClass]="{'text-success': documento.status == '1', 'text-danger': documento.status == '2'}">{{formartarStatus(documento.status)}}</span>
+        </div>
+      </td>
+      <td class="border-bottom" *ngIf="documento.status == '0'">
+        <div class="row align-items-center justify-content-around">
+          <div class="icon vermelho mb-1" (click)="recusarDocumento(documento.url)">
+            <i class="fas fa-times"></i>
+          </div>
+          <div class="icon verde mb-1" (click)="aprovarDocumento(documento.url)">
+            <i class="fas fa-check"></i>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="aluno.documents?.length == 0" [ngStyle]="{'display': expandirUsuario(aluno.id) ? null:'none'}">
+      <td colspan="4" class="border-bottom">
+        <span>Não há documentos pendentes</span>
+      </td>
+    </tr>
+  </tbody>
+</table>

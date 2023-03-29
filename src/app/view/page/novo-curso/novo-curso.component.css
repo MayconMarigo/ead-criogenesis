@@ -1,0 +1,94 @@
+.instrutor-foto{
+  width: 75px;
+  height: 75px;
+}
+
+
+.secao-accordion {
+  border: 2px solid grey;
+  padding: 0 !important;
+}
+
+.accordion-item {
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+
+  padding: 1em 2em;
+  border-bottom: 2px solid grey;
+}
+.accordion-item:last-child {
+  border-bottom: none;
+}
+
+.accordion-item-cabecalho {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.item-indice {
+  background-color: #3c00cb;
+  width: 34px;
+  height: 34px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-titulo{
+  font-size: 1.4em;
+  font-weight: 500;
+}
+
+.item-icon{
+  font-size: 1.8em;
+  color: grey;
+
+  transition: all .5s ease;
+}
+
+.item-icon-abrir{
+  transform: rotate(90deg);
+  color: #3c00cb;
+}
+
+.accordion-item-conteudo{
+  height: 0px;
+  /* width: 100%; */
+  overflow: hidden;
+
+  background-color: white;
+  z-index: 2;
+
+  font-weight: 500;
+
+  /* transition: height .5s ease; */
+}
+.accordion-item-conteudo-abrir{
+  width: 100%;
+  height: auto;
+  border: 2px solid grey;
+  /* box-shadow: 0px 0px 10px black; */
+}
+
+.accordion-item-tamanho-secao{
+  height: 230px;
+}
+.accordion-item-tamanho-avaliacao{
+  height: 100px;
+}
+
+.espacamento-input{
+  margin-bottom: 1em;
+}
+.espacamento-input:last-child{
+  margin-bottom: 0;
+}
+
+.no-image{
+  background-color: transparent;
+  border: 2px dotted lightgray;
+}

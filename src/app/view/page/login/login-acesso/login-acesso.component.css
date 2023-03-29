@@ -1,0 +1,36 @@
+.col-md-12 span{
+    color: #6524e4;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: all .5s ease;
+}
+
+.col-md-12 span:hover{
+    text-decoration: underline;
+    color: rgb(105, 41, 235);
+}
+
+.col-md-12 .btn{
+    background: #332e87;
+    color: white;
+}
+.col-md-12 .btn:hover{
+    background: #450eb4;
+}
+
+.error{
+  border: 1px solid rgb(173, 1, 1);
+  background-color: rgb(221, 11, 11);
+  padding: 1em;
+  color: white;
+  border-radius: 5px;
+
+  transition: opacity .25s ease;
+}
+
+.error:hover{
+  opacity: .8;
+}
+

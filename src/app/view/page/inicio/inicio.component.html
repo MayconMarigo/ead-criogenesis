@@ -1,0 +1,322 @@
+<div class="corpo">
+  <div class="header">
+    <app-header></app-header>
+  </div>
+  <div class="section">
+    <img class="banner-principal" src="./././assets/inicio/home.png">
+    <!-- <div class="banner-imagem"></div> -->
+    <div class="container-fluid">
+      <div class="row p-5">
+        <div class="col-md-8">
+          <div class="como-funciona-titulo">Como Funciona?</div>
+          <p class="como-funciona-descricao">
+            Elaboramos um sistema ágil e de fácil manuseio, para que todos tenham facilidade em acessar os conteúdos.
+          </p>
+          <ul style="list-style: circle;">
+            <li class="como-funciona-descricao">O primeiro passo é criar uma conta em nossa plataforma.</li>
+            <li class="como-funciona-descricao">Preencha o formulário, que se encontra no final dessa página.</li>
+            <li class="como-funciona-descricao">Você receberá em até 48h um e-mail confirmando o cadastro.</li>
+            <li class="como-funciona-descricao">Após a aprovação do seu cadastro pela nossa equipe, você já poderá
+              usufruir da plataforma, incluindo os conteúdos, vídeos e outros materiais.</li>
+          </ul>
+        </div>
+        <div class="col-md-4 flex justify-content-center align-items-center">
+          <!-- <div class="imagem"></div> -->
+          <img class="comofunciona-imagem" src="./././assets/inicio/comofunciona.svg">
+        </div>
+      </div>
+      <div class="row pt-5 pl-5 pr-5 pb-2" *ngIf="cursos?.length > 0" style="background-color: aliceblue;">
+        <div class="col-md-8">
+          <div class="como-funciona-titulo">Nossos Cursos</div>
+        </div>
+      </div>
+      <div class="row flex justify-content-center align-items-start cursos p-5" *ngIf="cursos?.length > 0">
+        <div class="col-sm-8 col-lg-3 curso-destaque curso-menor" *ngIf="cursos[0]">
+          <div class="card-curso">
+            <img class="card-curso-imagem" style="height: 300px; overflow: hidden;" [src]="cursos[0]?.image"
+              (error)="cursos[0].image = undefined" *ngIf="cursos[0]?.image">
+            <div style="border: 1px solid lightgrey; height: 300px; width: auto;" *ngIf="!cursos[0]?.image"
+              class="no-image">
+              <i class="fas fa-image no-image-icon"></i>
+            </div>
+            <div class="card-curso-conteudo">
+              <span class="card-curso-titulo">{{cursos[0]?.name}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8 col-lg-4 curso-destaque curso-maior" *ngIf="cursos[2]">
+          <div class="card-curso flex align-items-center justify-content-center">
+            <img class="card-curso-imagem card-curso-imagem-maior" style="height: 400px; overflow: hidden;"
+              [src]="cursos[2]?.image" (error)="cursos[2].image = undefined" *ngIf="cursos[2]?.image">
+            <div style="border: 1px solid lightgrey; height: 400px; width: auto;" *ngIf="!cursos[2].image"
+              class="no-image">
+              <i class="fas fa-image no-image-icon"></i>
+            </div>
+            <div class="card-curso-conteudo">
+              <span class="card-curso-titulo">{{cursos[2]?.name}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8 col-lg-3 curso-destaque curso-menor" *ngIf="cursos[1]">
+          <div class="card-curso">
+            <img class="card-curso-imagem" style="height: 300px; overflow: hidden;" [src]="cursos[1]?.image"
+              (error)="cursos[1].image = undefined" *ngIf="cursos[1]?.image">
+            <div style="border: 1px solid lightgrey; height: 300px; width: auto;" *ngIf="!cursos[1]?.image"
+              class="no-image">
+              <i class="fas fa-image no-image-icon"></i>
+            </div>
+            <div class="card-curso-conteudo">
+              <span class="card-curso-titulo">{{cursos[1]?.name}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="flex justify-content-center align-items-center cursos-responsive p-5" *ngIf="cursos?.length > 0">
+        <carousel [height]="400">
+          <div class="carousel-cell card-curso flex align-items-center justify-content-start" *ngIf="cursos[0]" sty>
+            <img class="card-curso-imagem card-curso-imagem-maior"
+              style="overflow:hidden; height: 200px; width: 100%; object-fit: cover;" [src]="cursos[0]?.image"
+              (error)="cursos[0].image = undefined" *ngIf="cursos[0]?.image">
+            <div style="border: 1px solid lightgrey; height: 200px; width: 100%;" *ngIf="!cursos[0]?.image"
+              class="no-image">
+              <i class="fas fa-image no-image-icon"></i>
+            </div>
+            <div class="card-curso-conteudo">
+              <span class="card-curso-titulo">{{cursos[0]?.name}}</span>
+            </div>
+          </div>
+          <div class="carousel-cell card-curso flex align-items-center justify-content-start" *ngIf="cursos[2]">
+            <img class="card-curso-imagem card-curso-imagem-maior"
+              style="overflow:hidden; height: 200px; width: 100%; object-fit: cover;" [src]="cursos[2]?.image"
+              (error)="cursos[2].image = undefined" *ngIf="cursos[2]?.image">
+            <div style="border: 1px solid lightgrey; height: 200px; width: 100%;" *ngIf="!cursos[2]?.image"
+              class="no-image">
+              <i class="fas fa-image no-image-icon"></i>
+            </div>
+            <div class="card-curso-conteudo">
+              <span class="card-curso-titulo">{{cursos[2]?.name}}</span>
+            </div>
+          </div>
+          <div class="carousel-cell card-curso flex align-items-center justify-content-start" *ngIf="cursos[1]">
+            <img class="card-curso-imagem card-curso-imagem-maior"
+              style="overflow:hidden; height: 200px; width: 100%; object-fit: cover;" [src]="cursos[1]?.image"
+              (error)="cursos[1].image = undefined" *ngIf="cursos[1]?.image">
+            <div style="border: 1px solid lightgrey; height: 200px; width: 100%;" *ngIf="!cursos[1]?.image"
+              class="no-image">
+              <i class="fas fa-image no-image-icon"></i>
+            </div>
+            <div class="card-curso-conteudo">
+              <span class="card-curso-titulo">{{cursos[1]?.name}}</span>
+            </div>
+          </div>
+        </carousel>
+      </div> -->
+      <div class="row pt-5 pl-5 pr-5 pb-2">
+        <div class="col-md-12">
+          <div class="como-funciona-titulo">Linha do Tempo</div>
+        </div>
+      </div>
+      <div class="slider pt-5 pb-5" (mouseover)="mouseover = true" (mouseout)="mouseover=false">
+        <div class="slide-track" [ngStyle]="{'animation-play-state': mouseover ? 'paused' : 'running'}">
+          <div class="slide">
+            <img src="./././assets/inicio/linhatempo.png" height="100%" width="100%" alt="" />
+          </div>
+          <div class="slide">
+            <img src="./././assets/inicio/linhatempo.png" height="100%" width="100%" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="row pt-5 pl-5 pr-5 pb-2" style="background-color: aliceblue;">
+        <div class="col-md-12">
+          <div class="como-funciona-titulo">Certificações</div>
+        </div>
+      </div>
+      <div class="row p-5" style="background-color: aliceblue;">
+        <div class="col-lg-3 card-width-inner mb-3">
+          <div class="card-inner flex flex-direction-column justify-content-start align-items-center">
+            <div class="card-inner-image" class="flex justify-content-center align-items-start mb-3">
+              <img src="./././assets/inicio/AABB.svg" style="width: 190px; height: 100px;">
+            </div>
+            <p class="certificado-texto">A Criogênesis é uma empresa acreditada pela AABB (Associação para o Avanço do
+              Sangue e
+              Bioterapias), garantindo que as amostras possuem alto padrão internacional de qualidade e
+              amplamente
+              aceito nos principais protocolos terapêuticos/experimentais no mundo inteiro.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 card-width-inner mb-3">
+          <div class="card-inner flex flex-direction-column justify-content-start align-items-center">
+            <div class="card-inner-image" class="flex justify-content-center align-items-start mb-3">
+              <img src="./././assets/inicio/NBR.svg" style="width: 190px; height: 100px;">
+            </div>
+            <p class="certificado-texto">O Sistema de Gestão da Qualidade da Criogênesis é certificado pela Fundação
+              Vanzolini de
+              acordo com IQNet NBR ISO 9001:2015</p>
+          </div>
+        </div>
+        <div class="col-lg-3 card-width-inner mb-3">
+          <div class="card-inner flex flex-direction-column justify-content-start align-items-center">
+            <div class="card-inner-image" class="flex justify-content-center align-items-start mb-3">
+              <img src="./././assets/inicio/ISBT.svg" style="width: 190px; height: 100px;">
+            </div>
+            <p class="certificado-texto">A Criogênesis utiliza o Sistema de Identificação Individual das amostras com
+              código de barras
+              pela metodologia ISBT 128, a qual é reconhecida em todos os 77 países membros da ICCBBA.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 card-width-inner mb-3">
+          <div class="card-inner flex flex-direction-column justify-content-start align-items-center">
+            <div class="card-inner-image" class="flex justify-content-center align-items-start mb-3">
+              <img src="./././assets/inicio/Sentinel360.png" style="width: 190px; height: 100px;">
+            </div>
+            <p class="certificado-texto">Este monitora na empresa: temperatura (tanques, geladeira, ambientes), umidade,
+              energia
+              elétrica, gerador, volume de O2, CO2, segurança, entre outros.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-5 pb-5"></div>
+    </div>
+    <form #form="ngForm" *ngIf="!autenticado">
+      <div class="formulario">
+        <div class="formulario-esquerda">
+          <div class="flex justify-content-center no-visibe-mobile">
+            <img class="formulario-esquerda-logo" src="./././assets/logo/criogenesis_logo.svg">
+          </div>
+          <div class="formulario-esquerda-titulo">
+            Plataforma de educação a distância
+          </div>
+          <div class="flex justify-content-center visibe-mobile">
+            <img class="formulario-esquerda-logo" src="./././assets/logo/criogenesis_logo.svg">
+          </div>
+          <div class="formulario-esquerda-descricao mb-3">
+            Faça o cadastro rápido para receber os cursos de forma fácil e
+            descomplicada!
+          </div>
+        </div>
+        <div class="formulario-direita">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12 input-form mb-4">
+                <label class="label" for="nome">Nome:</label>
+                <mat-form-field appearance="outline">
+                  <input class="input" matInput type="text" required [(ngModel)]="usuario.name" name="nome"
+                    #nome="ngModel" id="nome">
+                  <mat-error *ngIf="nome.errors?.required">Campo obrigatório</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-12 input-form mb-4">
+                <label class="label" for="email">E-mail:</label>
+                <mat-form-field appearance="outline">
+                  <input class="input" matInput type="email" required [(ngModel)]="usuario.email" name="email"
+                    #email="ngModel" id="email" (blur)="validarEmail(email)">
+                  <mat-error *ngIf="email.errors?.required">Campo obrigatório</mat-error>
+                  <mat-error *ngIf="email.errors?.emailExiste">E-mail já cadastrado</mat-error>
+                  <mat-error *ngIf="email.errors?.emailInvalido">E-mail inválido</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 input-form mb-4">
+                <label class="label" for="senha">Senha:</label>
+                <mat-form-field appearance="outline">
+                  <input class="input" minlength="4" matInput type="password" required [(ngModel)]="usuario.password"
+                    name="senha" #senha="ngModel" id="senha" (keyup)="verificarForcaSenha($event)"
+                    (blur)="setSenhasDiferentes(confirmarSenha)">
+                  <mat-error *ngIf="senha.errors?.required">Campo obrigatório</mat-error>
+                  <mat-error *ngIf="senha.errors?.minlength">Tamanho mínimo 4 caracteres</mat-error>
+                </mat-form-field>
+                <span *ngIf="usuario.password"><i class="text-secondary mr-2">Nível da senha:</i><strong
+                    [ngClass]="{'text-success': senhaForca >= 4, 'text-warning': senhaForca >=2 && senhaForca < 4, 'text-danger': senhaForca < 2}">{{medidorDeForca(senhaForca)}}</strong></span>
+              </div>
+              <div class="col-md-6 input-form mb-4">
+                <label class="label" for="confirmarSenha">Confirmar senha:</label>
+                <mat-form-field appearance="outline">
+                  <input class="input" matInput type="password" required [(ngModel)]="usuario.confirmPassword"
+                    name="confirmarSenha" #confirmarSenha="ngModel" id="confirmarSenha"
+                    (blur)="setSenhasDiferentes(confirmarSenha)">
+                  <mat-error *ngIf="confirmarSenha.errors?.required">Campo obrigatório</mat-error>
+                  <mat-error *ngIf="confirmarSenha.errors?.senhasDiferentes">Senhas não conferem</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6 input-form mb-4">
+                <label class="label" for="estado">Estado:</label>
+                <mat-form-field appearance="outline" hideRequiredMarker>
+                  <mat-select [(ngModel)]="usuario.state" name="estado" #estado="ngModel" id="estado"
+                    (openedChange)="triggerEvent($event, buscarEstado)" required>
+                    <mat-form-field class="ml-3 mt-3">
+                      <mat-label>Buscar</mat-label>
+                      <input class="input" matInput type="text" #buscarEstado (keyup)="filtrarEstado(buscarEstado)">
+                    </mat-form-field>
+                    <mat-option *ngFor="let estado of listaEstadosFiltradas" [value]="estado.sigla">
+                      {{estado.nome}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="estado.errors?.required">Campo obrigatório</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 input-form mb-4">
+                <label class="label" for="telefone">Telefone:</label>
+                <mat-form-field appearance="outline">
+                  <input class="input" matInput type="text" required [(ngModel)]="usuario.phone" name="telefone"
+                    #telefone="ngModel" id="telefone" mask="(00) 00000-0000">
+                  <mat-error *ngIf="telefone.errors?.required">Campo obrigatório</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6 input-form mb-4">
+                <label class="label" for="registroTipo">Registro de Classe:</label>
+                <input-form-radio style="height: 100%;" [submitted]="form.submitted"
+                  [radios]="[{name:'COREN', value: 1},{name:'CRM', value: 2},{name:'CRO', value: 3}, {name:'Outros', value: 4}]"
+                  (change)="usuario.registryType = receberRetorno($event)"></input-form-radio>
+              </div>
+              <div class="col-lg-6 input-form mb-4">
+                <label class="label" for="registry">Número Registro:</label>
+                <mat-form-field appearance="outline">
+                  <input class="input" matInput type="text" [required]="usuario.registryType != 4"
+                    [(ngModel)]="usuario.registry" name="registry" #registry="ngModel" id="registry">
+                  <mat-error *ngIf="registry.errors?.required">Campo obrigatório</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 mb-2">
+                <input-form-checkbox
+                  nome="Concordo com a Lei Geral de Proteção de Dados Pessoais, Lei nº 13.709/2018, legislação brasileira que regulamenta as atividades de tratamento de dados pessoais e que também altera os artigos 7 e 16 do Marco Civil da internet."
+                  [valor]="leiProtecaoDados" (change)="leiProtecaoDados = receberRetorno($event)"
+                  [submitted]="form.submitted">
+                </input-form-checkbox>
+              </div>
+              <div class="col-12 mb-2">
+                <div class="flex">
+                  <input-form-checkbox class="flex justify-content-center align-item-center" [valor]="informarPdpTdu"
+                    (change)="informarPdpTdu = receberRetorno($event)" [submitted]="form.submitted">
+                  </input-form-checkbox>
+                  <span style="color: grey;
+                font-size: .8rem;" [ngClass]="{'text-danger': !informarPdpTdu && form.submitted}">Ao informar meus
+                    dados, eu concordo com a <a href="/pdp" target="_blank">Política de
+                      Privacidade</a> e <a href="/tdu" target="_blank">Termos de Uso</a>.</span>
+                </div>
+              </div>
+              <div class="col-12">
+                <input-form-checkbox nome="Autorizo receber informações sobre terapia celular."
+                  [valor]="receberInformacoesTerapiaCelular"
+                  (change)="receberInformacoesTerapiaCelular = receberRetorno($event)">
+                </input-form-checkbox>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12" align="right">
+                <button class="btn botao-color" (click)="cadastrar(form)" [disabled]="spinnerLoad">
+                  <i class="fas fa-check mr-2" *ngIf="!spinnerLoad"></i>
+                  <mat-spinner [diameter]="20" *ngIf="spinnerLoad"></mat-spinner>
+                  <span *ngIf="!spinnerLoad">INSCREVA-SE</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="footer">
+    <app-footer></app-footer>
+  </div>
+</div>

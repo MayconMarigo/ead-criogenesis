@@ -1,0 +1,14 @@
+<div class="container-fluid" style="background-color: #3e00d3; height: auto; border-radius: 20px;" [ngStyle]="{'margin-bottom': marginBottom+'em'}">
+  <div class="row">
+    <div class="col-sm-6 flex align-items-center" style="width: 100%; color: white;" [ngStyle]="{'height':heightPixels+'px'}"><!-- Label -->
+      <span style="letter-spacing: 1.5px;" [ngStyle]="{'font-size': labelFontSize+'rem'}">{{label}}</span>
+    </div>
+    <div class="col-sm-6 flex justify-content-end align-items-center" style="width: 100%; color: rgb(233, 229, 4);" [ngStyle]="{'font-size':starFontSize+'em', 'height':heightPixels+'px'}" (mouseleave)="indice = 0"><!-- Estrelas -->
+      <i class="far fa-star mr-2" (mouseover)="readonly ? null : indice = 1" (click)="selecionarIndice(1)" [ngClass]="{'far': !isMaior(1), 'fas': isMaior(1), 'pointer': !readonly}"></i>
+      <i class="far fa-star mr-2" (mouseover)="readonly ? null : indice = 2" (click)="selecionarIndice(2)" [ngClass]="{'far': !isMaior(2), 'fas': isMaior(2), 'pointer': !readonly}"></i>
+      <i class="far fa-star mr-2" (mouseover)="readonly ? null : indice = 3" (click)="selecionarIndice(3)" [ngClass]="{'far': !isMaior(3), 'fas': isMaior(3), 'pointer': !readonly}"></i>
+      <i class="far fa-star mr-2" (mouseover)="readonly ? null : indice = 4" (click)="selecionarIndice(4)" [ngClass]="{'far': !isMaior(4), 'fas': isMaior(4), 'pointer': !readonly}"></i>
+      <i class="far fa-star mr-2" (mouseover)="readonly ? null : indice = 5" (click)="selecionarIndice(5)" [ngClass]="{'far': !isMaior(5), 'fas': isMaior(5), 'pointer': !readonly}"></i>
+    </div>
+  </div>
+</div>

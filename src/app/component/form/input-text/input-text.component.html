@@ -1,0 +1,6 @@
+<div class="input" (click)="focusInput()" [ngClass]="{'input-selecionado': selecionado}">
+    <div class="icon" [ngClass]="{'icon-selecionado': selecionado}">
+        <i [class]="'fas fa-'+icon"></i>
+    </div>
+    <input type="text" #input (focus)="focusFunction()" (focusout)="focusOutFunction()" (blur)="blur.emit($event)" (keyup)="keyup.emit($event)" [(ngModel)]="inputTextValue" (ngModelChange)="inputTextValueChange.emit(inputTextValue)" [placeholder]="placeholder">
+</div>

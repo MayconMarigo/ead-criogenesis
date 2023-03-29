@@ -1,0 +1,17 @@
+<div class="input" *ngFor="let documento of documentos">
+  <span class="label">{{ documento.nome }}</span>
+  <div class="input-upload">
+    <div class="upload">
+      <span>{{
+        formatarArquivoNome(documento.arquivoNome, documento.extensao)
+      }}</span>
+      <label [for]="documento.id">Fazer Upload</label>
+    </div>
+    <input
+      type="file"
+      [name]="documento.id"
+      [id]="documento.id"
+      (change)="gerenciarFileInput($event.target, documento)"
+    />
+  </div>
+</div>

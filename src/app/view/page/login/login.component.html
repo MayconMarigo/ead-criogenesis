@@ -1,0 +1,30 @@
+<div class="corpo flex flex-direction-row">
+  <div class="informacao-lateral">
+    <div class="conteudo">
+      <div class="titulo">
+        <span>Plataforma de educação</span>
+        <span>à distância</span>
+      </div>
+    </div>
+    <div style="flex: 1; margin-bottom: 3em; height: 40vh; flex: 1; padding: 0 2em;">
+      <img style="height: 100%; width: 100%;" src="./././assets/login/pessoas-ead.svg">
+    </div>
+  </div>
+  <div class="formulario-login">
+    <div class="container-fluid">
+      <div class="conteudo flex align-items-center">
+        <div class="container-fluid p-5">
+          <div class="row">
+            <div class="col-md-12 flex flex-direction-column mb-3">
+              <img src="./././assets/logo/criogenesis_logo.svg" class="logo-imagem mb-2">
+              <span class="admin-span" style="margin: auto;" *ngIf="isAdminRoute()">AMBIENTE ADMIN</span>
+            </div>
+            <div class="col-12 conteudo-view">
+              <router-outlet></router-outlet>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

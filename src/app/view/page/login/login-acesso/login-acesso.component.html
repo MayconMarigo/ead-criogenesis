@@ -1,0 +1,27 @@
+<form #loginForm="ngForm">
+  <div class="row mt-3">
+    <div class="col-md-12 input-form mb-2">
+      <label class="label" for="email">E-mail:</label>
+      <mat-form-field appearance="outline">
+        <input matInput type="email" [(ngModel)]="login.email" name="email" #email="ngModel" id="email">
+      </mat-form-field>
+    </div>
+    <div class="col-md-12 input-form mb-2">
+      <label class="label" for="senha">Senha:</label>
+      <mat-form-field  appearance="outline">
+        <input matInput class="input" type="password" [(ngModel)]="login.senha" name="senha" #senha="ngModel" id="senha">
+      </mat-form-field>
+    </div>
+    <div class="col-md-12 mb-2">
+      <span (click)="recuperarSenha()">Esqueceu sua senha?</span>
+    </div>
+    <div class="col-12 mb-2" *ngIf="errorMensagem">
+      <div class="error mat-elevation-z5" (click)="errorMensagem = ''">
+        <span>{{errorMensagem}}</span>
+      </div>
+    </div>
+    <div class="col-md-12" align="right">
+      <button class="btn botao-color" (click)="fazerLogin(loginForm)"><i class="fas fa-check mr-2"></i>Login</button>
+    </div>
+  </div>
+</form>

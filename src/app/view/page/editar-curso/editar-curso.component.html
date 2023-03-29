@@ -1,0 +1,343 @@
+<div class="container-fluid" style="display: flex; flex-direction: column;">
+  <span class="titulo" style="text-align: center;">Editar Curso</span>
+  <div class="row">
+    <div class="col-lg-4 mb-2">
+      <div class="container-fluid" style="height: 100%;">
+        <div class="row pointer" style="height: auto; position: relative;" (mouseover)="mouseover=true"
+          (mouseleave)="mouseover=false">
+          <!-- Imagem video -->
+          <div class="curso-imagens">
+            <div class="upload-image flex justify-content-center align-items-center">
+              <label for="cursoImg">
+                <div class="flex justify-content-center align-items-center" style="height: 100%; width: 100%;">
+                  <div class="text-truncate flex justify-content-center align-items-center" style="z-index: 2;"
+                    *ngIf="!spinnerLoad && mouseover" [ngClass]="{'back-teste' : mouseover}">
+                    <i class="fas fa-upload"></i>
+                  </div>
+                  <div class="flex justify-content-center align-items-center back-teste" style="z-index: 2;"
+                    *ngIf="spinnerLoad">
+                    <mat-spinner [diameter]="20"></mat-spinner>
+                  </div>
+                </div>
+              </label>
+            </div>
+            <input type="file" name="cursoImg" id="cursoImg" (change)="gerenciarImgInput($event.target, curso, true)">
+          </div>
+          <div class="no-image" style="height: 200px; width: 100%;" *ngIf="!curso.image && !imgUrl">
+            <i class="fas fa-image no-image-icon"></i>
+          </div>
+          <img style="height: auto; width: 100%; background-color: black;" [src]="getImagemCurso()"
+            *ngIf="curso?.image && !imgUrl" (error)="curso.image = undefined">
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 mb-2">
+      <div class="row">
+        <div class="col-lg-10 mb-2" style="display: flex; flex-direction: column;">
+          <!-- Nome do Curso -->
+          <label class="label" for="nomeCurso">Nome do Curso:</label>
+          <mat-form-field appearance="outline">
+            <input class="input" matInput type="text" [(ngModel)]="curso.name" name="nomeCurso" #nomeCurso="ngModel"
+              id="nomeCurso">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-2 mb-2" style="display: flex; flex-direction: column;">
+          <span class="label" style="visibility: hidden;">a</span>
+          <div
+            style="height: 100%;  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <input-form-checkbox nome="Ativo" [valor]="visivel" (change)="visivel = receberRetorno($event)">
+            </input-form-checkbox>
+          </div>
+        </div>
+        <div class="col-lg-12 mb-2" style="display: flex; flex-direction: column;">
+          <!-- Descricao do Curso -->
+          <label class="label" for="descricaoCurso">Descrição do Curso:</label>
+          <mat-form-field appearance="outline">
+            <textarea matInput [(ngModel)]="curso.description" name="descricaoCurso" #descricaoCurso="ngModel"
+              id="descricaoCurso" style="height: 50px; resize: none;"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-2" style="display: flex; flex-direction: column;">
+      <label class="label" for="cargaHoriaria">Carga horária (HH:mm):</label>
+      <mat-form-field appearance="outline">
+        <input class="input" matInput type="text" [(ngModel)]="cargaHoraria" name="cargaHoriaria"
+          #cargaHoriaria="ngModel" id="cargaHoriaria" mask="0*:20" [dropSpecialCharacters]="false" [patterns]="customPatterns">
+          <mat-error *ngIf="cargaHoriaria.errors?.mask">Preencha corretamente!</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-lg-8 mb-2" style="display: flex; flex-direction: column;">
+      <span class="label">Tipo do curso:</span>
+      <div style="height: 100%;  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+        <input-form-checkbox nome="COREN" [valor]="enfermagem" (change)="enfermagem = receberRetorno($event)">
+        </input-form-checkbox>
+        <input-form-checkbox nome="CRM" [valor]="medicina" (change)="medicina = receberRetorno($event)">
+        </input-form-checkbox>
+        <input-form-checkbox nome="CRO" [valor]="dentista" (change)="dentista = receberRetorno($event)">
+        </input-form-checkbox>
+        <input-form-checkbox nome="Criogênesis" [valor]="criogenesis" (change)="criogenesis = receberRetorno($event)">
+        </input-form-checkbox>
+        <input-form-checkbox nome="Outros " [valor]="outros" (change)="outros = receberRetorno($event)">
+        </input-form-checkbox>
+      </div>
+    </div>
+    <div class="col-lg-12 mb-2" style="display: flex; flex-direction: column;">
+      <!-- O que voce aprenderia? -->
+      <label class="label" for="aprenderia">O que voce aprenderia?</label>
+      <mat-form-field class="espacamento-input" appearance="outline" *ngFor="let topic of topics; let i = index">
+        <input matInput name="aprenderia" [id]="'topic'+i.toString()" [(ngModel)]="topic.value"
+          (blur)="adicionarNovoTopic(i)" (keyup.enter)="adicionarNovoTopic(i)">
+      </mat-form-field>
+    </div>
+    <div class="col-lg-12 mb-2">
+      <button class="btn botao-color-2" (click)="adicionarNovoTopic(null)"><i class="fas fa-plus"></i></button>
+    </div>
+    <div class="col-lg-12" align="right">
+      <button class="btn botao-color-2" (click)="salvar(cargaHoriaria)" [disabled]="saveLoading">
+        <mat-spinner [diameter]="20" *ngIf="saveLoading"></mat-spinner>
+        <span *ngIf="!saveLoading">Salvar Curso</span>
+      </button>
+    </div>
+    <div class="col-lg-12 mb-2" *ngFor="let instrutor of instrutores; let i = index">
+      <div class="row">
+        <div class="col-lg-2 mb-2 flex justify-content-center align-items-center" style="position: relative;">
+          <!-- Imagem instrutor -->
+          <div class="instrutor-foto rounded-circle" *ngIf="!instrutor.image"
+            [ngClass]="{'no-image': !instrutor.image}">
+            <!-- <i *ngIf="!instrutor.image" class="fas fa-image no-image-icon"></i> -->
+            <label [for]="'imgInstrutor'+i" class="text-truncate pointer">
+              <div class="flex justify-content-center align-items-center" style="height: 100%; width: 100%;">
+                <i class="fas fa-upload no-image-icon" *ngIf="!instrutor.arquivoDados"></i>
+                <i class="fas fa-image no-image-icon" *ngIf="instrutor.arquivoDados"></i>
+              </div>
+            </label>
+          </div>
+          <img class="instrutor-foto rounded-circle" *ngIf="instrutor.image" [src]="instrutor.image"
+            (mouseover)="mouseoverInstrutor = instrutor.id">
+        </div>
+        <input type="file" [name]="'imgInstrutor'+i" [id]="'imgInstrutor'+i"
+          (change)="gerenciarImgInput($event.target, instrutor)">
+        <div class="mb-2 col-lg-4" style="display: flex; flex-direction: column;">
+          <!-- Nome instrutor -->
+          <label class="label" [for]="'nomeInstrutor'+i">Nome do Instrutor:</label>
+          <mat-form-field appearance="outline">
+            <input class="input" [disabled]="instrutor.loadedFromBd" matInput type="text" [(ngModel)]="instrutor.name"
+              [name]="'nomeInstrutor'+i">
+          </mat-form-field>
+        </div>
+        <div class="mb-2 col-lg-3" style="display: flex; flex-direction: column;">
+          <!-- Ocupação instrutor -->
+          <label class="label" [for]="'occupation'+i">Ocupação:</label>
+          <mat-form-field appearance="outline">
+            <input class="input" matInput type="text" [disabled]="instrutor.loadedFromBd"
+              [(ngModel)]="instrutor.occupation" [name]="'nomeInstrutor'+i">
+          </mat-form-field>
+        </div>
+        <!-- <div class="col-lg-3 mb-2" *ngIf="!instrutor.loadedFromBd">
+          <label class="label"></label>
+          <div class="upload">
+            <span class="text-truncate">{{formatarArquivoNome(instrutor)}}</span>
+            <label [for]="'imgInstrutor'+i" class="text-truncate">Upload</label>
+          </div>
+          <input type="file" [name]="'imgInstrutor'+i" [id]="'imgInstrutor'+i"
+            (change)="gerenciarFileInput($event.target, instrutor)">
+        </div> -->
+        <div class="col-lg-3 mb-2 flex align-items-end" *ngIf="instrutor.loadedFromBd">
+          <button class="btn btn-block btn-danger" (click)="removerInstrutor(i)">Remover</button>
+        </div>
+        <div class="col-lg-3 mb-2 flex align-items-end" *ngIf="!instrutor.loadedFromBd">
+          <button class="btn btn-block botao-color-2" (click)="salvarInstrutor(instrutor,i)">Salvar</button>
+        </div>
+        <div style="position: absolute; right: 0; top: 0; z-index: 1;"
+          *ngIf="!instrutor.loadedFromBd && instrutores.length > 1">
+          <i class="far fa-times-circle text-danger pointer" (click)="removerInstrutor(i)"></i>
+        </div>
+        <!-- <div style="position: absolute; right: 0; top: 20px; z-index: 1;">
+          <i class="far fa-check-circle text-success pointer"></i>
+        </div> -->
+      </div>
+    </div>
+    <div class="col-lg-12 mb-2" align="">
+      <button class="btn botao-color-2" (click)="adicionarInstrutor()"><i class="fas fa-plus"></i> Instrutor</button>
+    </div>
+    <div class="col-lg-12 mb-2 pt-4 pb-4" style="border-radius: 15px; border: 1px solid lightgray;">
+      <div class="row" cdkDropList (cdkDropListDropped)="drop($event, contents)">
+        <div class="col-lg-6 mb-2" style="display: flex; flex-direction: row; align-items: center;">
+          <!-- Criar seção dos cursos -->
+          <span style="font-size: 1.4em;">Criar seção dos cursos:</span>
+        </div>
+        <div class="col-lg-6" align="right">
+          <button class="btn font-size botao-color-2 mb-2" (click)="novaSecao('S')">Nova Seção</button>
+          <button class="btn botao-color-2 mb-2 ml-3" (click)="salvarContents()" [disabled]="saveContentLoading">
+            <mat-spinner [diameter]="20" *ngIf="saveContentLoading"></mat-spinner>
+            <span *ngIf="!saveContentLoading">
+              Salvar Seções
+            </span>
+          </button>
+        </div>
+        <div class="col-lg-12 mb-2" cdkDrag *ngFor="let secao of contents; let indexContent = index" style="background-color: white;">
+          <div class="secao-accordion">
+            <div class="accordion-item">
+              <div class="accordion-item-cabecalho align-items-center">
+                <div class="linha align-items-center">
+                  <div class="flex justify-content-center">
+                    <i class="fas fa-grip-vertical" cdkDragHandle style="cursor: move; font-size: 1.5em; color: grey;"></i>
+                  </div>
+                  <div class="item-indice ml-3 rounded-circle text-white">{{indexContent+1}}</div>
+                  <div class="item-titulo ml-3 mr-3">Seção {{indexContent+1}}:</div>
+                </div>
+                <div style="flex: 1;" class="mr-3">
+                  <mat-form-field style="width: 100%;" appearance="outline">
+                    <input class="input" matInput type="text" [(ngModel)]="secao.name">
+                  </mat-form-field>
+                </div>
+                <div class="item-icon pointer" [ngClass]="{'item-icon-abrir': estaSelecionado(indexContent)}"
+                  (click)="selecionarIndice(indexContent)"><i class="fas fa-chevron-right"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item-conteudo"
+            [ngClass]="{'accordion-item-conteudo-abrir': estaSelecionado(indexContent)}">
+            <div class="row justify-content-between align-items-center m-0" style="height: 100%;" cdkDropList (cdkDropListDropped)="drop($event, secao.contents)">
+              <div class="col-lg-12 mt-3" *ngFor="let content of secao.contents; let i = index" cdkDrag style="background-color: white;">
+                <div class="input-upload row" *ngIf="content.type == 'pdf'">
+                  <div class="col-lg-1">
+                    <div class="flex justify-content-center">
+                      <i class="fas fa-grip-vertical" cdkDragHandle style="cursor: move; font-size: 1.5em; color: grey;"></i>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 mb-2">
+                    <div style="padding: .5em 1em; border: 1px solid lightgray; border-radius: 15px; font-size: 1.5em;"
+                      class="text-danger flex flex-direction-row">
+                      <i class="fas fa-file-pdf mr-2"></i>
+                      <div class="text-truncate">PDF</div>
+                    </div>
+                  </div>
+                  <div class="mb-2" [ngClass]="{'col-lg-7': !content.url, 'col-lg-6':content.url}">
+                    <mat-form-field style="width: 100%;" class="mb-2" appearance="outline">
+                      <input class="input" matInput type="text" [(ngModel)]="content.name" placeholder="Nome do pdf">
+                    </mat-form-field>
+                    <div class="upload" *ngIf="!content.url && content.id">
+                      <span class="text-truncate">{{formatarPdfNome(content)}}</span>
+                      <label [for]="secao.section + '' + i" class="text-truncate">Fazer Upload</label>
+                    </div>
+                    <mat-form-field *ngIf="!content.url && !content.id" style="width: 100%; font-weight: bold;"
+                      class="mb-2" appearance="outline">
+                      <input class="input" matInput type="text" value="Salve a seção para fazer o upload!" readonly>
+                    </mat-form-field>
+                    <input type="file" *ngIf="!content.url" [name]="secao.section + '' + i"
+                      [id]="secao.section + '' + i" (change)="gerenciarPDFInput($event.target, content)">
+                  </div>
+                  <div class="col-lg-1 mb-2" align="left" *ngIf="content.url">
+                    <button class="btn botao-color-2" (click)="visualizarPDF(content.url)">
+                      <i class="far fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="mb-2" align="center" [ngClass]="{'col-lg-2': !content.url, 'col-lg-1': content.url}">
+                    <button class="btn btn-danger" (click)="excluirItem(indexContent,i)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- <i class="fas fa-video"></i> -->
+                <div class="input-upload row" *ngIf="content.type == 'video'">
+                  <div class="col-lg-1">
+                    <div class="flex justify-content-center">
+                      <i class="fas fa-grip-vertical" cdkDragHandle style="cursor: move; font-size: 1.5em; color: grey;"></i>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 mb-2">
+                    <div style="padding: .5em 1em; border: 1px solid lightgray; border-radius: 15px; font-size: 1.5em;"
+                      class="text-primary flex flex-direction-row">
+                      <i class="fas fa-video mr-2"></i>
+                      <div class="text-truncate">Vídeo</div>
+                    </div>
+                  </div>
+                  <div class="mb-2" [ngClass]="{'col-lg-7': !content.url, 'col-lg-6':content.url}">
+                    <mat-form-field class="mb-2" style="width: 100%;" class="mb-2" appearance="outline">
+                      <input class="input" matInput type="text" [(ngModel)]="content.name" placeholder="Nome do vídeo">
+                    </mat-form-field>
+                    <div class="upload" *ngIf="!content.url && content.id">
+                      <span class="text-truncate">{{formatarVideoNome(content)}}</span>
+                      <label [for]="secao.section + '' + i" class="text-truncate">Fazer Upload</label>
+                    </div>
+                    <mat-form-field *ngIf="!content.url && !content.id" style="width: 100%; font-weight: bold;"
+                      class="mb-2" appearance="outline">
+                      <input class="input" matInput type="text" value="Salve a seção para fazer o upload!" readonly>
+                    </mat-form-field>
+                    <input type="file" *ngIf="!content.url" [name]="secao.section + '' + i"
+                      [id]="secao.section + '' + i" (change)="gerenciarVideoInput($event.target, content)">
+                  </div>
+                  <div class="col-lg-1 mb-2" align="left" *ngIf="content.url">
+                    <button class="btn botao-color-2" (click)="visualizarVideo(content.url)">
+                      <i class="far fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="mb-2" align="center" [ngClass]="{'col-lg-2': !content.url, 'col-lg-1': content.url}">
+                    <button class="btn btn-danger" (click)="excluirItem(indexContent,i)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="input-upload row" *ngIf="content.type == 'test'">
+                  <div class="col-lg-1">
+                    <div class="flex justify-content-center">
+                      <i class="fas fa-grip-vertical" cdkDragHandle style="cursor: move; font-size: 1.5em; color: grey;"></i>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 mb-2">
+                    <div
+                      style="padding: .5rem 1rem; border: 1px solid lightgray; border-radius: 15px; font-size: 1.5em;"
+                      class="flex flex-direction-row">
+                      <i class="fas fa-list-alt mr-2"></i>
+                      <div class="text-truncate">Avaliação</div>
+                    </div>
+                  </div>
+                  <div class="col-lg-7 mb-2">
+                    <mat-form-field class="mb-2" style="width: 100%;" appearance="outline">
+                      <input class="input" matInput type="text" [(ngModel)]="content.name"
+                        placeholder="Nome da avaliação">
+                    </mat-form-field>
+                    <div class="upload" *ngIf="!content.url && content.id">
+                      <span>Avaliação Final do Curso</span>
+                      <button type="button" (click)="abrirNovoAvaliacao(content)">Nova Avaliação</button>
+                    </div>
+                    <mat-form-field *ngIf="!content.id" style="width: 100%; font-weight: bold;" class="mb-2"
+                      appearance="outline">
+                      <input class="input" matInput type="text" value="Salve a seção para criar a avaliação!" readonly>
+                    </mat-form-field>
+                    <div class="upload" *ngIf="content.url && content.id">
+                      <button type="button" style="border-radius: 10px;"
+                        (click)="visualizarAvaliacao(content)">Editar Avaliação</button>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 mb-2" align="center">
+                    <button class="btn btn-danger" (click)="excluirItem(indexContent,i)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 mt-3 mb-3">
+                <div class="flex flex-direction-row justify-content-end">
+                  <mat-form-field appearance="outline">
+                    <mat-select [(ngModel)]="contentTipo">
+                      <mat-option value="pdf">Aulas em PDF</mat-option>
+                      <mat-option value="video">Aulas em Vídeo</mat-option>
+                      <!-- <mat-option value="text">Aulas em Texto</mat-option> -->
+                      <mat-option value="test">Avaliação</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button class="ml-3 btn botao-color-2" (click)="adicionarContent(secao)">Adicionar</button>
+                  <button class="ml-3 btn btn-danger" (click)="excluirContent(secao)">Excluir
+                    Seção</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

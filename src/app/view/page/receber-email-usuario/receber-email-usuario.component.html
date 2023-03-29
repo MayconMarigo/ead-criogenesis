@@ -1,0 +1,27 @@
+<span class="titulo">Usuários que aceitaram receber emails</span>
+<table class="tabela">
+  <thead>
+    <tr>
+      <th scope="col"class="bold">Nome</th>
+      <th scope="col"class="bold">Email</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let usuario of listaUsuarios; let i = index">
+    <tr class="efeito-hover">
+      <td class="border-right border-bottom">
+        <div class="row align-items-center">
+          <div class="imagem mr-3">{{usuario.name | doisCharacters}}</div>
+          <span class="texto-color">{{usuario.name}}</span>
+        </div>
+      </td>
+      <td class="border-bottom">
+        <div class="row align-items-center">
+          <span class="texto-color">{{usuario.email}}</span>
+        </div>
+      </td>
+      <!-- <td style="width: 5%" class="border-bottom">
+        <i class="fas fa-trash text-danger" (click)="deletarUsuario(usuario, i)"></i>
+      </td> -->
+    </tr>
+  </tbody>
+</table>

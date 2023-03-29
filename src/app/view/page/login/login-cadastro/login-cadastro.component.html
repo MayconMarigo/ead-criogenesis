@@ -1,0 +1,286 @@
+<div class="container-fluid">
+  <form #form="ngForm">
+    <div class="row mb-3">
+      <div class="col-md-12 input-form">
+        <label class="label" for="nome">Nome Completo:</label>
+        <mat-form-field appearance="outline">
+          <input
+            class="input"
+            matInput
+            type="text"
+            required
+            [(ngModel)]="usuario.name"
+            name="nome"
+            #nome="ngModel"
+            id="nome"
+          />
+          <mat-error *ngIf="nome.errors?.required">Campo obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 input-form">
+        <label class="label" for="email">E-mail:</label>
+        <mat-form-field appearance="outline">
+          <input
+            class="input"
+            matInput
+            type="email"
+            required
+            [(ngModel)]="usuario.email"
+            name="email"
+            #email="ngModel"
+            id="email"
+            (blur)="validarEmail(email)"
+          />
+          <mat-error *ngIf="email.errors?.required"
+            >Campo obrigatório</mat-error
+          >
+          <mat-error *ngIf="email.errors?.emailExiste"
+            >E-mail já cadastrado</mat-error
+          >
+          <mat-error *ngIf="email.errors?.emailInvalido"
+            >E-mail inválido</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 input-form">
+        <label class="label" for="senha">Senha:</label>
+        <mat-form-field appearance="outline">
+          <input
+            class="input"
+            matInput
+            minlength="4"
+            type="password"
+            required
+            [(ngModel)]="usuario.password"
+            name="senha"
+            #senha="ngModel"
+            id="senha"
+            (keyup)="verificarForcaSenha($event)"
+            (blur)="setSenhasDiferentes(confirmarSenha)"
+          />
+          <mat-error *ngIf="senha.errors?.required"
+            >Campo obrigatório</mat-error
+          >
+          <mat-error *ngIf="senha.errors?.minlength"
+            >Tamanho mínimo 4 caracteres</mat-error
+          >
+        </mat-form-field>
+        <span *ngIf="usuario.password"
+          ><i class="text-secondary mr-2">Nível da senha:</i
+          ><strong
+            [ngClass]="{
+              'text-success': senhaForca >= 4,
+              'text-warning': senhaForca >= 2 && senhaForca < 4,
+              'text-danger': senhaForca < 2
+            }"
+            >{{ medidorDeForca(senhaForca) }}</strong
+          ></span
+        >
+      </div>
+      <div class="col-md-12 input-form">
+        <label class="label" for="confirmarSenha">Confirmar Senha:</label>
+        <mat-form-field appearance="outline">
+          <input
+            class="input"
+            matInput
+            minlength="4"
+            type="password"
+            required
+            [(ngModel)]="usuario.confirmPassword"
+            name="confirmarSenha"
+            #confirmarSenha="ngModel"
+            id="confirmarSenha"
+            (blur)="setSenhasDiferentes(confirmarSenha)"
+          />
+          <mat-error *ngIf="confirmarSenha.errors?.required"
+            >Campo obrigatório</mat-error
+          >
+          <mat-error *ngIf="confirmarSenha.errors?.senhasDiferentes"
+            >Senhas não conferem</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 col-lg-6 input-form">
+        <label class="label" for="estado">Estado:</label>
+        <mat-form-field appearance="outline" hideRequiredMarker>
+          <mat-select
+            [(ngModel)]="usuario.state"
+            name="estado"
+            #estado="ngModel"
+            id="estado"
+            (openedChange)="triggerEvent($event, buscarEstado)"
+            required
+            (selectionChange)="selecionarEstado($event)"
+          >
+            <mat-form-field class="ml-3 mt-3">
+              <mat-label>Buscar</mat-label>
+              <input
+                class="input"
+                matInput
+                type="text"
+                #buscarEstado
+                (keyup)="filtrarEstado(buscarEstado)"
+              />
+            </mat-form-field>
+            <mat-option
+              *ngFor="let estado of listaEstadosFiltradas"
+              [value]="estado.sigla"
+            >
+              {{ estado.nome }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="estado.errors?.required"
+            >Campo obrigatório</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 col-lg-6 input-form">
+        <label class="label" for="telefone">Telefone:</label>
+        <mat-form-field appearance="outline">
+          <input
+            class="input"
+            matInput
+            type="text"
+            required
+            [(ngModel)]="usuario.phone"
+            name="telefone"
+            #telefone="ngModel"
+            id="telefone"
+            mask="(00) 00000-0000"
+          />
+          <mat-error *ngIf="telefone.errors?.required"
+            >Campo obrigatório</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 col-lg-6 input-form">
+        <label class="label" for="cidade">Cidade:</label>
+        <mat-form-field appearance="outline" hideRequiredMarker>
+          <mat-select
+            [(ngModel)]="usuario.city"
+            name="cidade"
+            #cidade="ngModel"
+            id="cidade"
+            (openedChange)="triggerEvent($event, buscarCidade)"
+            required
+            (selectionChange)="selecionarCidade($event)"
+          >
+            <mat-form-field class="ml-3 mt-3">
+              <mat-label>Buscar</mat-label>
+              <input
+                class="input"
+                matInput
+                type="text"
+                #buscarCidade
+                (keyup)="filtrarCidade(buscarCidade)"
+              />
+            </mat-form-field>
+            <mat-option
+              *ngFor="
+                let c of listaCidadesFiltradas?.length > 0
+                  ? listaCidadesFiltradas
+                  : listaCidades
+              "
+              [value]="c"
+            >
+              {{ c }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="estado.errors?.required"
+            >Campo obrigatório</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 input-form">
+        <label class="label" for="registroTipo">Registro de Classe:</label>
+        <input-form-radio
+          style="height: 100%"
+          [submitted]="form.submitted"
+          [radios]="[
+            { name: 'COREN', value: 1 },
+            { name: 'CRM', value: 2 },
+            { name: 'CRO', value: 3 },
+            { name: 'Outros', value: 4 }
+          ]"
+          (change)="usuario.registryType = receberRetorno($event)"
+        ></input-form-radio>
+      </div>
+      <div class="col-md-6 input-form">
+        <label class="label" for="registry">Número Registro:</label>
+        <mat-form-field appearance="outline">
+          <input
+            class="input"
+            matInput
+            type="text"
+            [required]="usuario.registryType != 4"
+            [(ngModel)]="usuario.registry"
+            name="registry"
+            #registry="ngModel"
+            id="registry"
+          />
+          <mat-error *ngIf="registry.errors?.required"
+            >Campo obrigatório</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 mb-2">
+        <input-form-checkbox
+          nome="Concordo com a Lei Geral de Proteção de Dados Pessoais, Lei nº 13.709/2018, legislação brasileira que regulamenta as atividades de tratamento de dados pessoais e que também altera os artigos 7 e 16 do Marco Civil da internet."
+          [valor]="leiProtecaoDados"
+          (change)="leiProtecaoDados = receberRetorno($event)"
+          [submitted]="form.submitted"
+        >
+        </input-form-checkbox>
+      </div>
+      <!-- <div class="col-12 mb-2">
+        <input-form-checkbox
+          nome="Autorizo receber informações sobre a coleta e armazenamento de células-tronco."
+          [valor]="receberInformacoesCelulasTronco"
+          (change)="receberInformacoesCelulasTronco = receberRetorno($event)"
+          [submitted]="form.submitted">
+        </input-form-checkbox>
+      </div> -->
+      <div class="col-12 mb-2">
+        <div class="flex">
+          <input-form-checkbox
+            class="flex justify-content-center align-item-center"
+            [valor]="informarPdpTdu"
+            (change)="informarPdpTdu = receberRetorno($event)"
+            [submitted]="form.submitted"
+          >
+          </input-form-checkbox>
+          <span
+            style="color: grey; font-size: 0.8rem"
+            [ngClass]="{ 'text-danger': !informarPdpTdu && form.submitted }"
+            >Ao informar meus dados, eu concordo com a
+            <a href="/pdp" target="_blank">Política de Privacidade</a> e
+            <a href="/tdu" target="_blank">Termos de Uso</a>.</span
+          >
+        </div>
+      </div>
+      <div class="col-12 mb-2">
+        <input-form-checkbox
+          nome="Autorizo receber informações sobre terapia celular."
+          [valor]="receberInformacoesTerapiaCelular"
+          (change)="receberInformacoesTerapiaCelular = receberRetorno($event)"
+        >
+        </input-form-checkbox>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" align="right">
+        <button
+          class="btn font-size botao-color"
+          (click)="cadastrar(form)"
+          [disabled]="spinnerLoad"
+        >
+          <i class="fas fa-check mr-2" *ngIf="!spinnerLoad"></i>
+          <mat-spinner [diameter]="20" *ngIf="spinnerLoad"></mat-spinner>
+          <span *ngIf="!spinnerLoad">Cadastre-se</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

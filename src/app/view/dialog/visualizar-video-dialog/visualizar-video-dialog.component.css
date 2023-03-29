@@ -1,0 +1,52 @@
+.video {
+  overflow: hidden;
+  height: 90%;
+  width: 100%;
+
+  padding: 0 .5em;
+
+  font-size: 4em;
+  position: relative;
+
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.video-player{
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.icon{
+  background-color: black;
+  cursor: pointer;
+  border-radius: 100%;
+  color: white;
+  z-index: 2;
+
+  font-size: 2em;
+
+  transition: all .25s ease;
+}
+.icon-esquerda{
+  background-color: #807474;
+  color: #e4e2e6;
+  cursor: pointer;
+  z-index: 2;
+
+  font-size: 1em;
+
+  transition: all .25s ease;
+}
+.icon-direita{
+  background-color: #807474;
+  color: #e4e2e6;
+  cursor: pointer;
+  z-index: 2;
+
+  font-size: 1em;
+
+  transition: all .25s ease;
+}

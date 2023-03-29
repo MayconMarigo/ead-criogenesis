@@ -1,0 +1,18 @@
+.titulo{
+  color: white;
+  background-color: #332e87;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.titulo span{
+  line-height: 1;
+}
+
+.descricao{
+  min-height: auto;
+  padding: 1em 2.5em;
+  color: #332e87;
+  text-align: center;
+}

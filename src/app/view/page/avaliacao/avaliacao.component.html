@@ -1,0 +1,47 @@
+<div style="height: 100vh;" class="flex flex-direction-column justify-content-between">
+  <div>
+    <div class="header">
+      <app-header></app-header>
+    </div>
+    <div class="container mb-5 mt-5" style="border: 1px solid lightgray; padding: 3em;">
+      <span class="mb-5" style="display: block; color: black; font-weight: 500; font-size: 2rem;">Avaliação</span>
+      <div class="container-fluid" style="border: 1px solid lightgray; padding: 2em; color: gray;">
+        <div class="row" style="font-size: 1.1rem;">
+          <span class="col-lg-12 mb-3" style="display:inline-block">Questão {{questaoIndiceSelecionado+1}}:</span>
+          <span class="col-lg-12 ml-2 mr-2"
+            style="display:inline-block; letter-spacing: 1px;">{{questaoSelecionado.question}}</span>
+          <div class="col-lg-12 mt-3">
+            <div class="flex flex-direction-row border-bottom justify-content-start mt-3 pb-2"
+              style="color: gray;"
+              *ngFor="let answer of questaoSelecionado.answers; let answerIndice = index">
+              <i class="far mr-2"
+                [ngClass]="{'fa-circle': !respostaSelecionado(answerIndice), 'fa-dot-circle': respostaSelecionado(answerIndice) }"
+                (click)="selecionarResposta(answerIndice)"></i>
+              <span>{{answer}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-5 flex justify-content-end" style="flex-wrap: wrap;">
+          <button class="btn btn-crio-3 mr-1" *ngIf="!estaSelecionadoPrimeiro()"
+            (click)="recuarQuestao()">Anterior</button>
+          <button class="btn btn-crio-3 mr-1" [ngClass]="{'btn-crio-3-selected': estaSelecionado(i)}"
+            *ngFor="let questao of listaQuestoes; let i = index" (click)="irParaQuestao(i, questao)">{{i+1}}</button>
+          <button class="btn btn-crio-3" *ngIf="!estaSelecionadoUltimo()" (click)="proximaQuestao()">Próxima</button>
+          <button class="btn botao-color" *ngIf="estaSelecionadoUltimo()" (click)="finalizar()"
+            [disabled]="isRouteAdmin">Finalizar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mb-5">
+    <div class="row">
+      <div class="col-12 p-0">
+        <button class="btn btn-danger" *ngIf="isRouteAdmin"
+          [routerLink]="'/admin/gerenciar/curso/todos/'+courseId+'/editar'">Voltar ao editar curso</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <app-footer [footerUp]="false"></app-footer>
+  </div>
+</div>

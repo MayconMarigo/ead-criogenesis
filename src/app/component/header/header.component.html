@@ -1,0 +1,151 @@
+<div class="header">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="logo col-4 pr-2 pl-2 flex justify-content-start">
+        <img
+          src=".\.\.\assets\logo\criogenesis_logo.svg"
+          class="logo-imagem pointer"
+          routerLink="/"
+        />
+      </div>
+      <!-- <div class="barra-pesquisa ml-4">
+        <input-text icon="search" (blur)="exibir()" [(inputTextValue)]="buscar"></input-text>
+      </div> -->
+      <div class="col-8 flex justify-content-end" align="right">
+        <div *ngIf="autenticado" class="user flex align-items-center">
+          <div
+            (click)="abrirDropdown()"
+            class="user-image mr-4"
+            *ngIf="user?.name"
+          >
+            {{ user?.name | doisCharacters }}
+          </div>
+        </div>
+        <div
+          *ngIf="!autenticado"
+          class="flex align-items-center justify-content-end"
+          style="flex-wrap: wrap"
+          align="right"
+        >
+          <button class="btn btn-crio-1" routerLink="/login">
+            Fazer Login
+          </button>
+          <div class="margin-divider"></div>
+          <button class="btn btn-crio-2" routerLink="/login/cadastro">
+            Cadastra-se
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="dropdown" class="dropdown">
+    <div class="dropdown-header" *ngIf="user.name">
+      <div class="dropdown-header-circulo">
+        <div class="user-image">{{ user?.name | doisCharacters }}</div>
+      </div>
+      <div class="dropdown-header-conteudo">
+        <div class="username">{{ user?.name }}</div>
+        <div class="email">{{ user?.email }}</div>
+      </div>
+    </div>
+    <div class="dropdown-conteudo" (click)="fecharDropdown()" *ngIf="!isAdmin">
+      <div class="dropdown-conteudo-item">
+        <span
+          class="dropdown-conteudo-item-texto"
+          (click)="irParaRota('/aluno/cadastro')"
+          >Dados Cadastrais</span
+        >
+      </div>
+      <div class="dropdown-conteudo-item">
+        <span
+          class="dropdown-conteudo-item-texto"
+          (click)="irParaRota('/aluno/documento')"
+          >Documentos</span
+        >
+      </div>
+      <div class="dropdown-conteudo-item">
+        <span
+          class="dropdown-conteudo-item-texto"
+          (click)="irParaRota('/aluno/deposito')"
+          >Dados para Depósito</span
+        >
+      </div>
+      <div class="dropdown-conteudo-item">
+        <span
+          class="dropdown-conteudo-item-texto"
+          (click)="irParaRota('/aluno/meus-cursos')"
+          >Meus Cursos</span
+        >
+      </div>
+      <div class="dropdown-conteudo-item">
+        <span
+          class="dropdown-conteudo-item-texto"
+          (click)="irParaRota('/aluno/declaracao-participacao')"
+          >Declaração de Participação</span
+        >
+      </div>
+      <div class="dropdown-conteudo-item">
+        <span
+          class="dropdown-conteudo-item-texto"
+          (click)="irParaRota('/aluno/documentos-contratuais')"
+          >Documentos Contratuais</span
+        >
+      </div>
+      <div class="dropdown-conteudo-item">
+        <span
+          class="dropdown-conteudo-item-texto"
+          (click)="irParaRota('/aluno/marketing')"
+          >Marketing</span
+        >
+      </div>
+      <div class="dropdown-conteudo-item" (click)="deslogar()">
+        <span class="dropdown-conteudo-item-texto"
+          >Sair <i class="fas fa-sign-out-alt"></i
+        ></span>
+      </div>
+    </div>
+    <div class="dropdown-conteudo" (click)="fecharDropdown()" *ngIf="isAdmin">
+      <div class="dropdown-conteudo-item">
+        <span
+          class="dropdown-conteudo-item-texto"
+          (click)="irParaRota('/admin/dashboard')"
+          >Dashboard</span
+        >
+      </div>
+      <div class="dropdown-conteudo-item">
+        <span
+          class="dropdown-conteudo-item-texto"
+          (click)="irParaRota('/admin/gerenciar')"
+          >Gerenciar Usuários</span
+        >
+      </div>
+      <div class="dropdown-conteudo-item">
+        <span
+          class="dropdown-conteudo-item-texto"
+          (click)="irParaRota('/admin/gerenciar/curso')"
+          >Gerenciar Cursos</span
+        >
+      </div>
+      <div class="dropdown-conteudo-item">
+        <span
+          class="dropdown-conteudo-item-texto"
+          (click)="irParaRota('/admin/documentos-contratuais')"
+          >Documentos Contratuais</span
+        >
+      </div>
+      <div class="dropdown-conteudo-item">
+        <span
+          class="dropdown-conteudo-item-texto"
+          (click)="irParaRota('/admin/marketing')"
+          >Marketing</span
+        >
+      </div>
+      <div class="dropdown-conteudo-item" (click)="deslogar()">
+        <span class="dropdown-conteudo-item-texto"
+          >Sair <i class="fas fa-sign-out-alt"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="barra"></div>

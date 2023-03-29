@@ -1,0 +1,52 @@
+<div class="container-fluid" style="display: flex; flex-direction: column;">
+  <span class="titulo" style="text-align: center;">Todos os Cursos</span>
+  <div class="row">
+    <!-- <div class="col-lg-3" *ngFor="let curso of listaCursos">
+      <div class="curso-destaque curso-menor pointer" [routerLink]="'/admin/gerenciar/curso/todos/'+curso.id">
+        <div class="card-curso" style="font-size: .8em;">
+          <img class="card-curso-imagem" [src]="curso.image" *ngIf="curso.image" (error)="curso.image = undefined"/>
+          <div class="no-image" *ngIf="!curso.image">
+            <i class="fas fa-image no-image-icon"></i>
+          </div>
+          <div class="card-curso-conteudo mt-2">
+            <span class="card-curso-titulo" style="overflow-wrap: anywhere;">{{curso.name}}</span>
+            <span class="card-curso-descricao" style="overflow-wrap: anywhere;"
+              >{{curso.description}}</span>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="col-12 mb-3" *ngFor="let curso of listaCursos">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-3 pointer" [routerLink]="'/admin/gerenciar/curso/todos/'+curso.id">
+            <img [src]="curso.image" height="auto" width="100%" class="mat-elevation-z4 mb-3" (error)="curso.image = null">
+            <div class="no-image mat-elevation-z4 mb-3" style="background-size: 100% 100%;" *ngIf="!curso.image">
+              <i class="fas fa-image no-image-icon"></i>
+            </div>
+            <span [routerLink]="'/admin/gerenciar/curso/todos/'+curso.id+'/editar'" style="display: block; color: #3e00d3; font-weight: bold; display: inline-block;" class="texto-hover">{{curso.visible == 1 ? 'Ativo' : curso.visible == 0 ? 'Inativo' : 'Não definido'}}</span>
+          </div>
+          <div class="col-lg-4 mb-3 pointer" [routerLink]="'/admin/gerenciar/curso/todos/'+curso.id">
+            <span style="display: block; font-size: 1.5em; font-weight: bold;">
+              {{curso.name}}
+            </span>
+            <span style="display: block; color: #3e00d3; font-weight: bold;" class="mb-2">
+              {{'Carga horária: ' + converterParaHoraMinutos(curso.workload)}}
+            </span>
+            <span style="display: block;">
+              {{curso.description}}
+            </span>
+          </div>
+          <div class="col-lg-5">
+            <pontuacao label="Como a informação foi fornecida" [valor]="retonarScore(curso, '0')" [readonly]="true" [label-font-size]=".6" [star-font-size]="1" [margin-bottom]=".5" [height-px]="50"></pontuacao>
+            <pontuacao label="Qualidade do material apresentado" [valor]="retonarScore(curso, '1')" [readonly]="true" [label-font-size]=".6" [star-font-size]="1" [margin-bottom]=".5" [height-px]="50"></pontuacao>
+            <pontuacao label="Grau de dificuldade" [valor]="retonarScore(curso, '2')" [readonly]="true" [label-font-size]=".6" [star-font-size]="1" [margin-bottom]=".5" [height-px]="50"></pontuacao>
+            <pontuacao label="Duração do curso" [valor]="retonarScore(curso, '3')" [readonly]="true" [label-font-size]=".6" [star-font-size]="1" [margin-bottom]=".5" [height-px]="50"></pontuacao>
+            <pontuacao label="Avaliação geral do curso" [valor]="retonarScore(curso, '4')" [readonly]="true" [label-font-size]=".6" [star-font-size]="1" [height-px]="50"></pontuacao>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>

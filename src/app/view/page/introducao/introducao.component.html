@@ -1,0 +1,42 @@
+<div style="height: 100vh;" class="flex flex-direction-column justify-content-between">
+  <div>
+    <div class="header">
+      <app-header></app-header>
+    </div>
+    <div class="container mb-5 mt-5" style="border: 1px solid lightgray; padding: 3em;">
+      <span class="mb-5" style="display: block; color: black; font-weight: 500; font-size: 2rem; line-height: 1;">Avaliação {{testId}} - Tentativas</span>
+      <div class="container-fluid" style="border: 1px solid lightgray; padding: 2em; color: gray;">
+        <table class="tabela" style="max-height: 300px;">
+          <thead>
+            <tr>
+              <th scope="col" class="bold">Início</th>
+              <th scope="col" class="bold">Pontuação</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let tentativa of listaTentativas; let i = index">
+            <tr>
+              <td class="border-right border-bottom text-align-center">
+                <span>
+                  {{formatarDataHora(tentativa.start)}}
+                </span>
+              </td>
+              <td class="border-right border-bottom text-align-center">
+                <span [ngClass]="{'text-success': tentativa.pass, 'text-danger': !tentativa.pass}">
+                  {{tentativa.score}}%
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row justify-content-end mt-4" *ngIf="!aprovado">
+          <div class="col-md-3">
+            <button class="btn btn-block botao-color-2" [routerLink]="'/curso/'+courseId+'/avaliacao/'+testId">Começar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <app-footer [footerUp]="false"></app-footer>
+  </div>
+</div>

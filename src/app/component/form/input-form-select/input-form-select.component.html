@@ -1,0 +1,12 @@
+<div class="input-form-text" (click)="focusFunction()">
+    <div class="label">{{label}}</div>
+
+    <div class="input" [ngClass]="{ 'input-selected': selected }">
+        <input readonly type="text" size="" #input (focus)="focusFunction()" (focusout)="focusOutFunction()"
+           [value]="inputSelectValue" [placeholder]="placeholder">
+        <i [ngClass]="{ 'icon-selected': selected }" class="fas fa-chevron-right icon"></i>
+    </div>
+    <div *ngIf="selected" class="select-itens">
+        <ng-content></ng-content>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="container-fluid" style="display: flex; flex-direction: column;">
+  <span class="titulo" style="text-align: center;">Novo Curso</span>
+  <div class="row">
+    <div class="col-lg-12 mb-2">
+      <div class="row">
+        <div class="col-lg-12 mb-2" style="display: flex; flex-direction: column;">
+          <!-- Nome do Curso -->
+          <label class="label" for="nomeCurso">Nome do Curso:</label>
+          <mat-form-field appearance="outline">
+            <input class="input" matInput type="text" [(ngModel)]="curso.name" name="nomeCurso" #nomeCurso="ngModel"
+              id="nomeCurso">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-12 mb-2" style="display: flex; flex-direction: column;">
+          <!-- Descricao do Curso -->
+          <label class="label" for="descricaoCurso">Descrição do Curso:</label>
+          <mat-form-field appearance="outline">
+            <textarea matInput [(ngModel)]="curso.description" name="descricaoCurso" #descricaoCurso="ngModel"
+              id="descricaoCurso" style="height: 50px; resize: none;"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-2" style="display: flex; flex-direction: column;">
+      <label class="label" for="cargaHoriaria">Carga horária:</label>
+      <mat-form-field appearance="outline">
+        <input class="input" matInput type="text" [(ngModel)]="curso.workload" name="cargaHoriaria" #cargaHoriaria="ngModel"
+          id="cargaHoriaria" mask="separator.2" thousandSeparator=".">
+      </mat-form-field>
+    </div>
+    <div class="col-lg-8 mb-2" style="display: flex; flex-direction: column;">
+      <span class="label">Tipo do curso:</span>
+      <div style="height: 100%;  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+        <input-form-checkbox nome="COREN" [valor]="enfermagem" (change)="enfermagem = receberRetorno($event)">
+        </input-form-checkbox>
+        <input-form-checkbox nome="CRM" [valor]="dentista" (change)="dentista = receberRetorno($event)">
+        </input-form-checkbox>
+        <input-form-checkbox nome="CRO" [valor]="medicina" (change)="medicina = receberRetorno($event)">
+        </input-form-checkbox>
+        <input-form-checkbox nome="Criogênesis" [valor]="criogenesis" (change)="criogenesis = receberRetorno($event)">
+        </input-form-checkbox>
+        <input-form-checkbox nome="Outros " [valor]="outros" (change)="outros = receberRetorno($event)">
+        </input-form-checkbox>
+      </div>
+    </div>
+    <div class="col-lg-12 mb-2" style="display: flex; flex-direction: column;">
+      <!-- O que voce aprenderia? -->
+      <label class="label" for="aprenderia">O que voce aprenderia?</label>
+      <mat-form-field class="espacamento-input" appearance="outline" *ngFor="let topic of topics; let i = index">
+        <input matInput name="aprenderia" [id]="'topic'+i.toString()" [(ngModel)]="topic.value" (blur)="adicionarNovoTopic(i)" (keyup.enter)="adicionarNovoTopic(i)">
+      </mat-form-field>
+    </div>
+    <div class="col-lg-12 mb-2">
+      <button class="btn botao-color-2" (click)="adicionarNovoTopic(null)"><i class="fas fa-plus"></i></button>
+    </div>
+    <div class="col-lg-12" align="right">
+      <button class="btn botao-color" (click)="confirmar()" [disabled]="loading">
+        <div class="flex flex-direction-row">
+          <span *ngIf="!loading">Confirmar</span>
+          <mat-spinner *ngIf="loading" [diameter]="20"></mat-spinner>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

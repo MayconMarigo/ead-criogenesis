@@ -1,0 +1,36 @@
+.input-form-checkbox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.input-form-checkbox .quadrado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 17px;
+    min-width: 17px;
+
+    font-size: 0.6rem;
+    color: white;
+
+    border: 1px solid grey;
+    border-radius: 5px;
+
+    transition: all .1s ease-in;
+}
+
+
+.input-form-checkbox .quadrado-toggle{
+    /* background-color: #6c28f3; */
+    color: #6c28f3;
+    border-color: #6c28f3;
+}
+
+.input-form-checkbox .nome{
+    color: grey;
+    font-size: .8rem;
+    margin-left: .75em;
+}

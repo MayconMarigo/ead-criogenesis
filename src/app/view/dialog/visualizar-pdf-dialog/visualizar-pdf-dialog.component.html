@@ -1,0 +1,73 @@
+<div class="container-fluid" style="height: 93%">
+  <div class="row" style="height: 100%">
+    <div class="col-1 flex align-items-center">
+      <i
+        class="fas fa-arrow-circle-left pointer animate"
+        [matTooltip]="isPrimeiraPagina() ? '' : 'Recuar página'"
+        [ngClass]="{ pointer: !isPrimeiraPagina() }"
+        [ngStyle]="{ color: isPrimeiraPagina() ? 'grey' : '#3e00d3' }"
+        style="font-size: 2em"
+        (click)="recuarPagina()"
+      ></i>
+    </div>
+    <div class="col-10 flex justify-content-center" style="height: 100%">
+      <div
+        style="
+          height: 100%;
+          width: 70%;
+          margin: auto;
+          overflow: hidden;
+          display: inline-block;
+        "
+      >
+        <ngx-extended-pdf-viewer
+          [customToolbar]="customBar"
+          [src]="pdfSrc"
+          [pageViewMode]="'single'"
+          [showSidebarButton]="false"
+          [showSpreadButton]="false"
+          [showDownloadButton]="false"
+          [showPrintButton]="false"
+          [showOpenFileButton]="false"
+          [showToolbar]="true"
+          [showHandToolButton]="false"
+          [showRotateButton]="false"
+          [showPropertiesButton]="false"
+          [showSecondaryToolbarButton]="false"
+          [showBorders]="false"
+          [showScrollingButton]="false"
+          [showBookmarkButton]="false"
+          [zoom]="'page-fit'"
+          [draggable]="false"
+          [enableDragAndDrop]="false"
+          [showBookmarkButton]="false"
+          [showSpreadButton]="false"
+          [sidebarVisible]="false"
+          [page]="pagina"
+          (pagesLoaded)="onPagesLoaded($event)"
+        >
+        </ngx-extended-pdf-viewer>
+        <ng-template #customBar>
+          <pdf-zoom-toolbar></pdf-zoom-toolbar>
+        </ng-template>
+      </div>
+    </div>
+    <div class="col-1 flex align-items-center">
+      <i
+        class="fas fa-arrow-circle-right pointer animate"
+        [matTooltip]="isUltimaPagina() ? '' : 'Próxima página'"
+        [ngClass]="{ pointer: !isUltimaPagina() }"
+        [ngStyle]="{ color: isUltimaPagina() ? 'grey' : '#3e00d3' }"
+        style="font-size: 2em"
+        (click)="proximaPagina()"
+      ></i>
+    </div>
+  </div>
+</div>
+
+<div align="right">
+  <button class="btn botao-color-2 mr-3" (click)="baixarDocumento(pdfSrc)">
+    Baixar documento
+  </button>
+  <button class="btn botao-color-2" (click)="fecharDialog()">Fechar</button>
+</div>

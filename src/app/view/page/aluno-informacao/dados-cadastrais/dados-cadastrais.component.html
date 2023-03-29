@@ -1,0 +1,156 @@
+<div class="titulo">Dados Cadastrais</div>
+<form #form="ngForm">
+  <div class="cadastro-usuario">
+    <div class="formulario row">
+      <div class="col-lg-12 input-form">
+        <label class="label" for="nome">Nome:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [(ngModel)]="aluno.name" name="nome" #nome="ngModel" required
+            id="nome">
+          <mat-error *ngIf="nome.errors?.required">Campo obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+      <div class=" col-lg-4 input-form">
+        <label class="label" for="rg">RG:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [(ngModel)]="aluno.rg" name="rg" #rg="ngModel" required id="rg"
+            mask="00.000.000-X" [patterns]="customPatterns">
+          <mat-error *ngIf="rg.errors?.required">Campo obrigatório</mat-error>
+          <!-- <mat-error *ngIf="rg.errors?.rgInvalido">RG inválido</mat-error> -->
+        </mat-form-field>
+      </div>
+      <div class=" col-lg-4 input-form">
+        <label class="label" for="cpf">CPF:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [(ngModel)]="aluno.cpf" name="cpf" #cpf="ngModel" required id="cpf"
+            mask="000.000.000-00" (blur)="validarCpfCnpj(cpf)">
+          <mat-error *ngIf="cpf.errors?.required">Campo obrigatório</mat-error>
+          <mat-error *ngIf="cpf.errors?.cpfInvalido">CPF inválido</mat-error>
+        </mat-form-field>
+      </div>
+      <div class=" col-lg-4 input-form">
+        <label class="label" for="dataNascimento">Data de Nascimento:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [(ngModel)]="aluno.birthday" name="dataNascimento"
+            #dataNascimento="ngModel" required id="dataNascimento" mask="d0/M0/0000" minlength="8"
+            (blur)="validarDataPassado(dataNascimento)">
+          <mat-error *ngIf="dataNascimento.errors?.required">Campo obrigatório</mat-error>
+          <mat-error *ngIf="dataNascimento.errors?.minlength">Tamanho mínimo 8 caracteres</mat-error>
+          <mat-error *ngIf="dataNascimento.errors?.dataNaoPassado">Data inválida</mat-error>
+        </mat-form-field>
+      </div>
+      <div class=" col-lg-6 input-form">
+        <label class="label" for="cep">CEP:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [(ngModel)]="aluno.cep" name="cep" #cep="ngModel" required id="cep"
+            mask="00000-000" (blur)="consultarCep(cep)">
+          <mat-error *ngIf="cep.errors?.required">Campo obrigatório</mat-error>
+          <!-- <mat-error *ngIf="cep.errors?.cepInvalido">CEP inválido</mat-error> -->
+        </mat-form-field>
+      </div>
+      <div class=" col-lg-6 input-form">
+        <label class="label" for="estado">Estado:</label>
+        <mat-form-field appearance="outline" hideRequiredMarker>
+          <mat-select [(ngModel)]="aluno.state" name="estado" #estado="ngModel" id="estado"
+            (openedChange)="triggerEvent($event, buscarEstado)" required="">
+            <mat-form-field class="ml-3 mt-3">
+              <mat-label>Buscar</mat-label>
+              <input class="input" matInput type="text" #buscarEstado (keyup)="filtrarEstado(buscarEstado)"
+                (keydown)="$event.stopPropagation()">
+            </mat-form-field>
+            <mat-option *ngFor="let estado of listaEstadosFiltradas" [value]="estado.sigla">
+              {{estado.nome}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="estado.errors?.required">Campo obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+      <div class=" col-lg-6 input-form">
+        <label class="label" for="endereco">Endereço:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [(ngModel)]="aluno.address" name="endereco" #endereco="ngModel"
+            required id="endereco">
+          <mat-error *ngIf="endereco.errors?.required">Campo obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+      <div class=" col-lg-2 input-form">
+        <label class="label" for="numero">Número:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [(ngModel)]="aluno.number" name="numero" #numero="ngModel" required
+            id="numero">
+          <mat-error *ngIf="numero.errors?.required">Campo obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+      <div class=" col-lg-4 input-form">
+        <label class="label" for="numero">Complemento:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [(ngModel)]="aluno.complement" name="complement"
+            #complement="ngModel" required id="complement">
+          <mat-error *ngIf="complement.errors?.required">Campo obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 input-form">
+        <label class="label" for="cidade">Cidade:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [(ngModel)]="aluno.city" name="cidade" #cidade="ngModel" required
+            id="cidade">
+          <mat-error *ngIf="cidade.errors?.required">Campo obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+      <div class=" col-lg-6 input-form">
+        <label class="label" for="bairro">Bairro:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [(ngModel)]="aluno.neighborhood" name="bairro" #bairro="ngModel"
+            required id="bairro">
+          <mat-error *ngIf="bairro.errors?.required">Campo obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-12 input-form">
+        <label class="label" for="email">E-mail:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="email" [value]="aluno.email" disabled>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-12 input-form">
+        <label class="label" for="email2">E-mail Alternativo:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="email" [(ngModel)]="aluno.email2" name="email2" #email2="ngModel"
+            id="email2" (blur)="validarEmail(email2)">
+          <mat-error *ngIf="email2.errors?.emailInvalido">E-mail inválido</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 input-form">
+        <label class="label" for="telefone">Telefone:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [(ngModel)]="aluno.phone" name="telefone" #telefone="ngModel"
+            required id="telefone" mask="(00) 00000-0000">
+          <mat-error *ngIf="telefone.errors?.required">Campo obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 input-form">
+        <label class="label" for="telefone2">Telefone Alternativo:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [(ngModel)]="aluno.phone2" name="telefone2" #telefone2="ngModel"
+            id="telefone2" mask="(00) 00000-0000">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 input-form">
+        <label class="label mb-2">Registro de Classe:</label>
+        <input-form-radio style="height: 100%;" [disabled]="true"
+          [radios]="[{name:'COREN', value: 1},{name:'CRM', value: 2},{name:'CRO', value: 3},{name:'Criogênesis', value: 0},{name:'Outros', value: 4}]"
+          [value]="aluno.registryType"></input-form-radio>
+      </div>
+      <div class=" col-lg-6 input-form">
+        <label class="label" for="numeroRegistro">Número Registro:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [value]="aluno.registry" disabled>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4">
+        <button class="btn btn-block botao-color-2" (click)="confirmar(form)">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</form>

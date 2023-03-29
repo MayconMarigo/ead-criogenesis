@@ -1,0 +1,20 @@
+.option-border-right{
+  border-right: 1px solid lightgray;
+}
+
+.option-icon{
+  background-color: white;
+  color: gray;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  padding: .5em .75em;
+  cursor: pointer;
+
+  transition: all .5s ease;
+}
+
+.option-icon:hover{
+  background-color: whitesmoke;
+  color: #3e00d3;
+  border-color: #3e00d3;
+}

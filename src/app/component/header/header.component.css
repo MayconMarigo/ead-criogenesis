@@ -1,0 +1,194 @@
+.header {
+  background-color: #fafdff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  /* height: 100%; */
+  width: 100%;
+  /* justify-content: space-between; */
+  /* padding: 1rem; */
+}
+
+.header .logo {
+  height: 5em;
+  padding: 1em 0;
+}
+
+.header .logo-imagem {
+  /* background: transparent url('src\assets\logo\criogenesis_logo.svg'); */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  height: 100%;
+}
+
+.barra-pesquisa {
+  flex: 3;
+}
+
+/* User */
+.user {
+  height: 100%;
+
+  position: relative;
+}
+
+.user .username {
+  font-size: large;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.user .user-image {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: medium;
+  background-image: linear-gradient(180deg, #2ec680, #3c11cb);
+  color: white;
+  cursor: pointer;
+}
+
+/* Dropdown */
+.dropdown {
+  position: absolute;
+  background-color: white;
+  padding: 1.5em 1.25em;
+
+  top: 10px;
+  right: 62px;
+  z-index: 1;
+
+  box-shadow: 0px 0px 5px 1px grey;
+  z-index: 4;
+}
+
+.dropdown .dropdown-conteudo::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  z-index: -1;
+}
+
+.dropdown .dropdown-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown .dropdown-header .dropdown-header-circulo {
+  margin-right: .5em;
+}
+
+.dropdown .dropdown-header .dropdown-header-circulo .user-image {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  background-image: linear-gradient(180deg, #2ec680, #3c11cb);
+  color: white;
+
+  width: 4rem;
+  height: 4rem;
+  font-size: xx-large;
+}
+
+.dropdown .dropdown-header .dropdown-header-conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.dropdown .dropdown-header .dropdown-header-conteudo .username {
+  font-size: large;
+  font-weight: bold;
+  color: black;
+}
+
+.dropdown .dropdown-header .dropdown-header-conteudo .email {
+  color: #252525;
+}
+
+.dropdown .dropdown-conteudo {
+  margin-top: .5em;
+
+  border-bottom: 1px #dbdbdb solid;
+  border-top: 1px #dbdbdb solid;
+  z-index: 3;
+}
+
+.dropdown .dropdown-conteudo .dropdown-conteudo-item {
+  padding: .7em 0;
+
+  border-bottom: 1px #dbdbdb solid;
+}
+
+.dropdown .dropdown-conteudo .dropdown-conteudo-item .dropdown-conteudo-item-texto {
+  cursor: pointer;
+
+  font-size: 1.2em;
+  font-weight: 500;
+
+  position: relative;
+}
+
+.dropdown .dropdown-conteudo .dropdown-conteudo-item .dropdown-conteudo-item-texto::after {
+  content: "";
+  height: 2px;
+  width: 0;
+  background-color: #6524e4;
+
+  text-align: center;
+  position: absolute;
+  left: 45%;
+  bottom: 0;
+
+  transition: all .5s ease;
+}
+
+.dropdown .dropdown-conteudo .dropdown-conteudo-item .dropdown-conteudo-item-texto:hover::after {
+  left: 0;
+  width: 100%;
+}
+
+.dropdown .dropdown-conteudo .dropdown-conteudo-item:last-child {
+  border-bottom: none;
+}
+
+.barra{
+  background-image: linear-gradient(180deg, #2ec680, #3c11cb);
+  height: 2vw;
+  width: 100%;
+}
+.margin-divider{
+  margin-right: 2em;
+}
+
+@media only screen and (max-width: 420px) {.dropdown{right: 5px;}}
+@media only screen and (max-width: 575px) {
+  .btn{
+    font-size: .8em !important;
+  }
+  .margin-divider{
+    margin-right: 1em;
+  }
+  .barra{height: 5vw;}
+}
+@media only screen and (max-width: 312px) {
+  .margin-divider{
+    display: none;
+  }
+}
+@media only screen and (max-width: 768px) {.barra{height:3vw;}}

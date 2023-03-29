@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12 mb-2">
+      <div class="flex flex-direction-row justify-content-between align-items-center">
+        <span style="font-size: 1.2em; font-weight: bold; letter-spacing: 1px;">Avaliação</span>
+        <button class="btn btn-crio-1" (click)="novo()">Nova Questão <i class="fas fa-plus-circle"></i></button>
+      </div>
+    </div>
+    <div class="col-lg-12 mb-2" style="border: 1px solid lightgray; padding: 2em;"
+      *ngFor="let questao of questoes; let i = index" [ngStyle]="{'border-color':respostasNulas.includes(i) ? 'red':'lightgray'}">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12" *ngIf="respostasNulas.includes(i)">
+            <span class="text-danger"><i class="fas fa-exclamation-circle"></i>   Selecione uma resposta para esta questão</span>
+          </div>
+          <div class="col-lg-12" style="display: flex; flex-direction: column; ">
+            <label class="label">Questão {{i+1}}:</label>
+            <mat-form-field appearance="outline">
+              <textarea class="input" matInput type="text" style="resize: none;"
+                [(ngModel)]="questao.question"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-12 mt-3">
+            <div class="flex flex-direction-row border-bottom justify-content-between align-items-center pb-2 pt-2"
+              style="color: gray;" *ngFor="let opcao of questao.answers; let opcaoIndice = index">
+              <i class="far mr-2"
+                [ngClass]="{'fa-circle': !respostaSelecionado(i, opcaoIndice), 'fa-dot-circle': respostaSelecionado(i, opcaoIndice) }"
+                (click)="selecionarResposta(i,opcaoIndice)"></i>
+              <mat-form-field appearance="outline" style="flex: 1;">
+                <textarea class="input" matInput type="text" style="resize: none; width: 100%;"
+                  [(ngModel)]="opcao.value" (blur)="adicionarOpcao(i, opcaoIndice)"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <button class="btn btn-crio-1" (click)="adicionarOpcao(i)">Nova Resposta</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <button class="btn btn-block botao-color-2" (click)="salvar()">Salvar Avaliação</button>
+    </div>
+    <div class="col-lg-6"></div>
+    <div class="col-lg-3">
+      <button class="btn btn-block btn-danger" [mat-dialog-close]="false">Fechar</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+.imagem {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: 1em;
+  background-image: linear-gradient(180deg, #2ec680, #3c11cb);
+  color: white;
+}
+
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+}
+
+.vermelho {
+  background-color: #ff6643;
+}
+.verde {
+  background-color: #84e0be;
+}
+
+.titulo {
+  display: block;
+  text-align: center;
+}
+
+.text-sm-mobile {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.users-header {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.users-header-input {
+  height: 35px;
+  border-radius: 5px;
+  width: 100%;
+  border: 2px solid gray;
+  padding-left: 24px;
+}
+
+.inside-icon {
+  position: absolute;
+  margin-left: 8px;
+  top: 10px;
+}
+.select-container {
+  min-width: 150px;
+}
+.select-container select {
+  height: 35px;
+  width: 100%;
+}
+@media only screen and (max-width: 600px) {
+  .input-container {
+    margin-bottom: 10px;
+  }
+}

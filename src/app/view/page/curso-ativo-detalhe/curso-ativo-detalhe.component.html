@@ -1,0 +1,316 @@
+<div class="container-fluid" style="display: flex; flex-direction: column">
+  <div class="row">
+    <div class="col-lg-4">
+      <img
+        class="curso-ativo-imagem"
+        alt="Imagem representando o curso"
+        [src]="curso.image"
+        *ngIf="curso.image"
+        (error)="curso.image = undefined"
+      />
+      <div
+        class="no-image"
+        style="background-size: 100% 100%"
+        *ngIf="!curso.image"
+      >
+        <i class="fas fa-image no-image-icon"></i>
+      </div>
+    </div>
+    <div class="col-lg-8 curso-ativo flex justify-content-between">
+      <div class="flex flex-direction-column">
+        <span class="curso-ativo-titulo line-height-1 mb-3">{{
+          curso.name
+        }}</span>
+        <span class="curso-ativo-texto">{{ curso.description }}</span>
+      </div>
+      <div class="flex justify-content-between" style="width: 100%">
+        <span class="curso-ativo-texto"
+          >Carga horária {{ converterParaHoraMinutos(curso.workload) }}</span
+        >
+        <!-- <span class="curso-ativo-texto">{{curso.idioma}}</span> -->
+        <span class="curso-ativo-texto"
+          >Avaliação: {{ curso.score ? curso.score : "Não definido" }}</span
+        >
+      </div>
+    </div>
+    <div class="col-lg-12 mt-5">
+      <div class="gerenciar-item" (click)="abrirDashboard = !abrirDashboard">
+        <span>Dashboard</span>
+        <i
+          class="fas fa-chevron-right"
+          [ngClass]="{ 'rotate-90': abrirDashboard }"
+        ></i>
+      </div>
+      <div
+        class="item-conteudo"
+        [ngClass]="{ 'item-conteudo-abrir': abrirDashboard }"
+      >
+        <div class="container-fluid">
+          <div class="row mt-3">
+            <div class="col-lg-12">
+              <div class="dashboard-card" style="height: 100%">
+                <span class="dashboard-titulo">Estatística geral do Curso</span>
+                <div class="dashboard-card mt-2 mb-3">
+                  <div
+                    class="flex justify-content-between"
+                    style="font-size: 0.8em"
+                  >
+                    <span>Usuários Finalizados</span>
+                    <span>{{ usuariosFinalizados() | number : "1.0-0" }}%</span>
+                  </div>
+                  <div class="progress">
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      [style]="'width: ' + usuariosFinalizados() + '%'"
+                      aria-valuenow="45"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+                <div class="dashboard-card mb-3">
+                  <div
+                    class="flex justify-content-between"
+                    style="font-size: 0.8em"
+                  >
+                    <span>Usuários em Andamento</span>
+                    <span>{{ usuariosAndamento() | number : "1.0-0" }}%</span>
+                  </div>
+                  <div class="progress">
+                    <div
+                      class="progress-bar bg-crio-warning"
+                      role="progressbar"
+                      [style]="'width: ' + usuariosAndamento() + '%'"
+                      aria-valuenow="30"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+                <div class="dashboard-card">
+                  <div
+                    class="flex justify-content-between"
+                    style="font-size: 0.8em"
+                  >
+                    <span>Usuários Não Iniciados</span>
+                    <span
+                      >{{ usuariosNaoIniciados() | number : "1.0-0" }}%</span
+                    >
+                  </div>
+                  <div class="progress">
+                    <div
+                      class="progress-bar bg-crio-danger"
+                      role="progressbar"
+                      [style]="'width: ' + usuariosNaoIniciados() + '%'"
+                      aria-valuenow="0"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 mt-3">
+      <div class="gerenciar-item" (click)="abrirAluno = !abrirAluno">
+        <span>Alunos</span>
+        <i
+          class="fas fa-chevron-right"
+          [ngClass]="{ 'rotate-90': abrirAluno }"
+        ></i>
+      </div>
+
+      <div
+        class="item-conteudo"
+        [ngClass]="{ 'item-conteudo-abrir': abrirAluno }"
+      >
+        <div class="container py-3">
+          <div class="d-flex justify-content-end">
+            <div class="row col-lg-4 col-12 input-container">
+              <i class="fa fa-search inside-icon"></i>
+              <input
+                class="students-input"
+                placeholder="Buscar usuário"
+                (keyup)="filtrarAlunos($event)"
+              />
+            </div>
+          </div>
+        </div>
+        <table class="tabela">
+          <tbody
+            *ngFor="
+              let aluno of alunosFiltrados.length > 0
+                ? alunosFiltrados
+                : alunos;
+              let i = index
+            "
+          >
+            <tr class="border-bottom" (click)="selecionarUsuario(i)">
+              <td style="width: 30%" class="border-right">
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                  "
+                >
+                  <div class="imagem">{{ aluno.name | doisCharacters }}</div>
+                  <span class="ml-2 text-truncate">{{
+                    aluno.name.toUpperCase()
+                  }}</span>
+                </div>
+              </td>
+              <!-- <td>
+                <div
+                  class="flex justify-content-between"
+                  style="font-size: 0.8em"
+                >
+                  <span>Progresso do Curso</span>
+                  <span>{{ aluno.qnt }}</span>
+                </div>
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    [ngClass]="{
+                      'bg-crio-warning': aluno.qnt > 0 && aluno.qnt < 100
+                    }"
+                    role="progressbar"
+                    [ngStyle]="{ width: aluno.qnt + '%' }"
+                  ></div>
+                </div>
+              </td> -->
+              <td
+                style="width: 20%"
+                class="border-left"
+                *ngIf="!certs.includes(aluno.name)"
+              >
+                <div
+                  class="flex justify-content-center"
+                  style="font-size: 0.8em"
+                >
+                  <span style="color: red">Certificado não disponível</span>
+                </div>
+              </td>
+              <td
+                style="width: 20%"
+                class="border-left"
+                *ngIf="certs.includes(aluno.name)"
+              >
+                <div
+                  class="flex justify-content-center"
+                  style="font-size: 0.8em"
+                  (click)="
+                    downloadCert(
+                      alunosFiltrados.length > 0
+                        ? alunosFiltrados[i]
+                        : alunos[i]
+                    )
+                  "
+                >
+                  <span style="color: green; font-weight: 400"
+                    >Baixar certificado</span
+                  >
+                </div>
+              </td>
+            </tr>
+            <tr class="border-bottom" *ngIf="expandirUsuario(i)">
+              <div style="margin: 15px 0 0 15px">
+                <p style="font-weight: 700">Respostas</p>
+              </div>
+              <div *ngFor="let n of notas" style="margin: 15px 0 0 15px">
+                <div
+                  *ngIf="aluno.name.toUpperCase() == n.Usuario.toUpperCase()"
+                >
+                  <div>
+                    <div
+                      *ngFor="let question of tests?.questions; let k = index"
+                    >
+                      <p>
+                        <span style="font-weight: 700">Pergunta: </span
+                        >{{ question.question }}
+                      </p>
+                      <div *ngFor="let a of question?.answers; let z = index">
+                        <p
+                          *ngIf="
+                            z !== question.correta && z !== aluno.respostas[k]
+                          "
+                        >
+                          {{ a }}
+                        </p>
+                        <p
+                          style="font-weight: 700"
+                          *ngIf="
+                            question.correta !== z && z == aluno.respostas[k]
+                          "
+                        >
+                          {{ a }}
+                        </p>
+                        <p
+                          style="color: green"
+                          *ngIf="
+                            question.correta == z &&
+                            question.correta == aluno.respostas[k]
+                          "
+                        >
+                          {{ a }}
+                        </p>
+                        <p
+                          style="color: red"
+                          *ngIf="
+                            question.correta == z &&
+                            question.correta != aluno.respostas[k]
+                          "
+                        >
+                          {{ a }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-lg-12 mt-3">
+      <div class="gerenciar-item" (click)="abrirAcoes = !abrirAcoes">
+        <span>Ações</span>
+        <i
+          class="fas fa-chevron-right"
+          [ngClass]="{ 'rotate-90': abrirAcoes }"
+        ></i>
+      </div>
+      <div
+        class="item-conteudo"
+        [ngClass]="{ 'item-conteudo-abrir': abrirAcoes }"
+        [ngStyle]="{ height: abrirAcoes ? '100px' : null }"
+      >
+        <div class="container-fluid">
+          <div class="row mt-3">
+            <div class="col-lg-6 mb-2">
+              <button
+                class="btn btn-block botao-color-2"
+                [routerLink]="'/admin/gerenciar/curso/todos/' + id + '/editar'"
+              >
+                <i class="fas fa-edit mr-2"></i>Editar curso
+              </button>
+            </div>
+            <div class="col-lg-6 mb-2">
+              <button
+                class="btn btn-block btn-danger"
+                (click)="excluirCurso(curso.id)"
+              >
+                <i class="fas fa-trash mr-2"></i>Excluir curso
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,107 @@
+<h2 class="centralizar-mobile">Documento Contratual</h2>
+<hr />
+<form #form="ngForm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6 mb-3 input-form">
+        <label class="label" for="nome">Nome:</label>
+        <mat-form-field appearance="outline">
+          <input
+            class="input"
+            matInput
+            type="text"
+            required
+            [(ngModel)]="documento.name"
+            name="nome"
+            #nome="ngModel"
+            id="nome"
+          />
+          <mat-error *ngIf="nome.errors?.required">Campo obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 mb-3" style="display: flex; flex-direction: column">
+        <span class="label">Tipo:</span>
+        <div
+          style="
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+          "
+        >
+          <input-form-checkbox
+            nome="COREN"
+            [valor]="enfermagem"
+            (change)="enfermagem = receberRetorno($event)"
+          >
+          </input-form-checkbox>
+          <input-form-checkbox
+            nome="CRM"
+            [valor]="dentista"
+            (change)="dentista = receberRetorno($event)"
+          >
+          </input-form-checkbox>
+          <input-form-checkbox
+            nome="CRO"
+            [valor]="medicina"
+            (change)="medicina = receberRetorno($event)"
+          >
+          </input-form-checkbox>
+          <input-form-checkbox
+            nome="Criogênesis"
+            [valor]="criogenesis"
+            (change)="criogenesis = receberRetorno($event)"
+          >
+          </input-form-checkbox>
+          <input-form-checkbox
+            nome="Outros "
+            [valor]="outros"
+            (change)="outros = receberRetorno($event)"
+          >
+          </input-form-checkbox>
+        </div>
+      </div>
+      <div class="col-12 mb-3">
+        <div class="upload">
+          <span class="text-truncate">{{
+            formatarArquivoNome(documentoArquivo)
+          }}</span>
+          <label for="documentoImg" class="text-truncate">Fazer Upload</label>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-between">
+      <div class="col-sm-4">
+        <button
+          class="btn btn-block botao-color-2"
+          (click)="salvar(form)"
+          [disabled]="
+            isLoading ||
+            form.invalid ||
+            !documentoArquivo ||
+            gerarListaType().length == 0
+          "
+        >
+          <mat-spinner
+            [diameter]="20"
+            *ngIf="isLoading"
+            style="margin: auto"
+          ></mat-spinner>
+          <span *ngIf="!isLoading"> Criar </span>
+        </button>
+      </div>
+      <div class="col-sm-4">
+        <button class="btn btn-block btn-danger" [matDialogClose]="false">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+<input
+  type="file"
+  name="documentoImg"
+  id="documentoImg"
+  (change)="gerenciarFileInput($event.target)"
+/>

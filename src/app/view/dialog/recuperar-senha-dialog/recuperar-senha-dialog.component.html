@@ -1,0 +1,54 @@
+<form #form="ngForm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="titulo col-12">
+        <span class="text-truncate">
+          Recuperar Senha
+        </span>
+      </div>
+      <div class="descricao">
+        <span *ngIf="codigoRecebido" class="text-success">Código enviado ao seu e-mail, por favor verifique sua caixa de
+          entrada.</span>
+        <br>
+        <span>{{codigoRecebido ? 'Insira o código enviado por e-mail e defina uma nova senha.':'Enviaremos um e-mail com mais informações sobre como redefinir sua senha.'}}</span>
+      </div>
+      <div class="col-1" *ngIf="!codigoRecebido"></div>
+      <div class="col-10 mb-3 input-form" *ngIf="!codigoRecebido">
+        <label class="label" for="email">E-mail:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="email" required [(ngModel)]="emailUsuario" name="email">
+        </mat-form-field>
+      </div>
+      <div class="col-1" *ngIf="!codigoRecebido"></div>
+      <div class="col-1" *ngIf="codigoRecebido"></div>
+      <div class="col-10 mb-3 input-form" *ngIf="codigoRecebido">
+        <label class="label" for="codigoValor">Código:</label>
+        <mat-form-field appearance="outline">
+          <input class="input" matInput type="text" [(ngModel)]="codigoValor" name="codigoValor">
+        </mat-form-field>
+      </div>
+      <div class="col-1" *ngIf="codigoRecebido"></div>
+      <div class="col-1" *ngIf="codigoRecebido"></div>
+      <div class="col-10 mb-3 input-form" *ngIf="codigoRecebido">
+        <label class="label" for="novaSenha">Nova Senha:</label>
+        <mat-form-field appearance="outline">
+          <input  class="input" matInput minlength="4" type="password" required [(ngModel)]="novaSenha" name="senha" #senha="ngModel"
+          id="senha" (keyup)="verificarForcaSenha($event)">
+          <mat-error *ngIf="senha.errors?.required">Campo obrigatório</mat-error>
+          <mat-error *ngIf="senha.errors?.minlength">Tamanho mínimo 4 caracteres</mat-error>
+        </mat-form-field>
+        <span *ngIf="novaSenha"><i class="text-secondary mr-2">Nível da senha:</i><strong
+            [ngClass]="{'text-success': senhaForca >= 4, 'text-warning': senhaForca >=2 && senhaForca < 4, 'text-danger': senhaForca < 2}">{{medidorDeForca(senhaForca)}}</strong></span>
+      </div>
+      <div class="col-1" *ngIf="codigoRecebido"></div>
+      <div class="col-12 mb-3" align="center" [ngClass]="{'flex justify-content-between': codigoRecebido}">
+        <button class="btn botao-color" (click)="enviarEmail(form);" *ngIf="!codigoRecebido" [disabled]="!emailUsuario"><i
+            class="fas fa-check mr-2"></i>Enviar Email</button>
+        <button class="btn btn-danger" (click)="codigoRecebido = false" *ngIf="codigoRecebido"><i
+            class="fas fa-angle-left mr-2"></i>Voltar</button>
+        <button class="btn botao-color" (click)="salvarNovaSenha()" *ngIf="codigoRecebido" [disabled]="form.invalid"><i
+            class="fas fa-check mr-2"></i>Salvar Senha</button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,29 @@
+<div class="header">
+  <app-header></app-header>
+</div>
+<div class="aluno-tela">
+  <div class="menu-lateral">
+    <div class="menu-cabecalho">
+      <div class="imagem">{{aluno.name | doisCharacters}}</div>
+      <div class="nome">{{aluno.name}}</div>
+      <div class="email">{{aluno.email}}</div>
+    </div>
+    <div class="menu-conteudo">
+      <div class="menu-item"><span class="menu-item-texto" routerLink="/aluno/cadastro">Dados Cadastrais</span></div>
+      <div class="menu-item"><span class="menu-item-texto" routerLink="/aluno/documento">Documentos</span></div>
+      <div class="menu-item"><span class="menu-item-texto" routerLink="/aluno/deposito">Dados para Depósito</span></div>
+      <div class="menu-item"><span class="menu-item-texto" routerLink="/aluno/meus-cursos">Meus Cursos</span></div>
+      <div class="menu-item"><span class="menu-item-texto" routerLink="/aluno/declaracao-participacao">Declaração de Participação</span></div>
+      <div class="menu-item"><span class="menu-item-texto" routerLink="/aluno/documentos-contratuais">Documentos Contratuais</span></div>
+      <div class="menu-item"><span class="menu-item-texto" routerLink="/aluno/marketing">Marketing</span></div>
+      <div class="menu-item"><span class="menu-item-texto" (click)="deslogar()">Sair <i
+            class="fas fa-sign-out-alt"></i></span></div>
+    </div>
+  </div>
+  <div class="conteudo">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<div class="footer">
+  <app-footer [footerUp]="true"></app-footer>
+</div>

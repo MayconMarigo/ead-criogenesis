@@ -1,0 +1,93 @@
+<div class="container-fluid" style="display: flex; flex-direction: column;">
+  <span class="titulo" style="text-align: center;">Marketing</span>
+  <div class="row">
+    <div class="col-lg-4 mb-4">
+      <div class="container-fluid" style="height: 100%;">
+        <div class="row pointer" style="height: auto; position: relative;" (mouseover)="mouseover=true"
+          (mouseleave)="mouseover=false">
+          <div class="curso-imagens">
+            <div class="upload-image flex justify-content-center align-items-center">
+              <label for="marketingImg">
+                <div class="flex justify-content-center align-items-center" style="height: 100%; width: 100%;">
+                  <div class="text-truncate flex justify-content-center align-items-center" style="z-index: 2;"
+                    *ngIf="mouseover" [ngClass]="{'back-teste' : mouseover}">
+                    <i class="fas fa-upload"></i>
+                  </div>
+                  <!-- <div class="flex justify-content-center align-items-center back-teste" style="z-index: 2;"
+                    *ngIf="spinnerLoad">
+                    <mat-spinner [diameter]="20"></mat-spinner>
+                  </div> -->
+                </div>
+              </label>
+            </div>
+          </div>
+          <div style="border: 1px solid lightgrey; height: 250px; width: 100%;" *ngIf="!marketingImagem && !marketing.image"
+            class="no-image">
+            <i class="fas fa-image no-image-icon"></i>
+          </div>
+          <img [src]="imgUrl" *ngIf="marketingImagem && !marketing.image" style="width: 100%;">
+          <img [src]="marketing.image" *ngIf="marketing.image" style="width: 100%;"
+            (error)="marketing.image = undefined; alteracao = true;">
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 mb-4">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 mb-3 p-0">
+            <mat-form-field appearance="outline" class="border-radius-textarea" style="width: 100%;">
+              <input type="text" matInput [(ngModel)]="marketing.title" name="title" #title id="title"
+                placeholder="Título">
+            </mat-form-field>
+          </div>
+          <div class="col-12 p-0 teste" style="position: relative;">
+            <mat-form-field appearance="outline" class="border-radius-textarea" style="width: 100%;">
+              <textarea matInput [(ngModel)]="marketing.text" name="text" #text id="text"
+                style="height: 150px; resize: none;"></textarea>
+            </mat-form-field>
+            <!-- <div class="flex flex-direction-row option">
+              <label class="option-icon option-border-right" for="marketingImg" *ngIf="!alteracao">
+                <i class="fas fa-image"></i>
+              </label>
+              <div class="option-icon" (click)="copiarInput(text)">
+                <i class="fas fa-share"></i>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 mb-2" style="display: flex; flex-direction: column;">
+      <span class="label">Tipo do curso:</span>
+      <div style="height: 100%;  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+        <input-form-checkbox nome="COREN" [valor]="enfermagem" (change)="enfermagem = receberRetorno($event)">
+        </input-form-checkbox>
+        <input-form-checkbox nome="CRM" [valor]="dentista" (change)="dentista = receberRetorno($event)">
+        </input-form-checkbox>
+        <input-form-checkbox nome="CRO" [valor]="medicina" (change)="medicina = receberRetorno($event)">
+        </input-form-checkbox>
+        <input-form-checkbox nome="Criogênesis" [valor]="criogenesis" (change)="criogenesis = receberRetorno($event)">
+        </input-form-checkbox>
+        <input-form-checkbox nome="Outros " [valor]="outros" (change)="outros = receberRetorno($event)">
+        </input-form-checkbox>
+      </div>
+    </div>
+    <div class="col-sm-8" align="right">
+      <label class="btn botao-color-2" for="marketingImg" *ngIf="!alteracao">
+        <i class="fas fa-image"></i>
+      </label>
+      <button class="btn botao-color-2 ml-3" (click)="copiarInput(marketing.title, marketing.text)">
+        <i class="fas fa-share"></i>
+      </button>
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-block botao-color-2" (click)="salvar()" [disabled]="loading">
+        <mat-spinner [diameter]="20" *ngIf="loading" style="margin: auto;"></mat-spinner>
+        <span *ngIf="!loading">
+          SALVAR
+        </span>
+      </button>
+    </div>
+  </div>
+  <input type="file" name="marketingImg" id="marketingImg" (change)="gerenciarFileInput($event.target)">
+</div>

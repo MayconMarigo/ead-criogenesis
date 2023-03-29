@@ -1,0 +1,138 @@
+.instrutor-foto{
+  width: 50px;
+  height: 50px;
+}
+
+
+.secao-accordion {
+  border: 2px solid grey;
+  padding: 0 !important;
+}
+
+.accordion-item {
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+
+  padding: 1em 2em;
+  border-bottom: 2px solid grey;
+}
+.accordion-item:last-child {
+  border-bottom: none;
+}
+
+.accordion-item-cabecalho {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.item-indice {
+  background-color: #3c00cb;
+  width: 34px;
+  height: 34px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-titulo{
+  font-size: 1.4em;
+  font-weight: 500;
+}
+
+.item-icon{
+  font-size: 1.8em;
+  color: grey;
+
+  transition: all .5s ease;
+}
+
+.item-icon-abrir{
+  transform: rotate(90deg);
+  color: #3c00cb;
+}
+
+.accordion-item-conteudo{
+  height: 0px;
+  /* width: 100%; */
+  overflow: hidden;
+
+  background-color: white;
+  z-index: 2;
+
+  font-weight: 500;
+
+  /* transition: height .5s ease; */
+}
+.accordion-item-conteudo-abrir{
+  width: 100%;
+  height: auto;
+  border: 2px solid grey;
+  /* box-shadow: 0px 0px 10px black; */
+}
+
+.accordion-item-tamanho-secao{
+  height: 230px;
+}
+.accordion-item-tamanho-avaliacao{
+  height: 100px;
+}
+
+.espacamento-input{
+  margin-bottom: 1em;
+}
+.espacamento-input:last-child{
+  margin-bottom: 0;
+}
+
+.instrutor-foto .no-image-icon{
+  font-size: 1.5em;
+}
+
+.curso-imagens{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.upload-image{
+  height: 100%;
+}
+
+.upload-image label{
+  padding: .7em 2em;
+  /* background-color: #3E00D3; */
+  height: 100%;
+  width: 100%;
+  color: #FFF;
+  text-align: center;
+  display: block;
+  /* margin-top: 10px; */
+  cursor: pointer;
+
+  border: none;
+
+  transition: all .25s ease;
+}
+
+.back-teste{
+  width: 50px;
+  height: 50px;
+  background-color: #3E00D3;
+  border-radius: 50%;
+}
+
+.no-image-intrutor-icon{
+  color: white;
+}
+
+.visibility-onHover{
+  visibility: hidden;
+}
+
+.visibility-toggle:hover + .visibility-onHover{
+  visibility: visible;
+}

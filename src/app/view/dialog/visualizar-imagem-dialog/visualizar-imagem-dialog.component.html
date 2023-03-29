@@ -1,0 +1,9 @@
+<div style="height: 90%;" [ngClass]="{'flex': imgError, 'justify-content-center': imgError, 'align-items-center': imgError, 'flex-direction-column': imgError}">
+  <img [src]="imgSrc" (error)="imgError = true" *ngIf="!imgError">
+  <i class="fas fa-exclamation-triangle text-danger mb-3" *ngIf="imgError" style="font-size: 3em;"></i>
+  <span *ngIf="imgError" style="color: #3c00cb; font-size: 3em; font-weight: bold;" class="mb-5">Erro ao carregar imagem!</span>
+  <span *ngIf="imgError" style="color: #3c00cb; font-size: 2em; font-weight: bold;">Tela fechará automaticamente em {{timer}} segundos!</span>
+</div>
+<div class="mt-2" align="right">
+  <button class="btn botao-color-2" [mat-dialog-close]="imgError">Fechar</button>
+</div>

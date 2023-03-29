@@ -1,0 +1,53 @@
+.col-md-12 .btn {
+    background: #332e87;
+    color: white;
+}
+
+.col-md-12 .btn:hover {
+    background: #450eb4;
+}
+
+.conteudo {
+    max-height: 95%;
+    overflow: auto;
+    padding: 0 1.5em;
+}
+
+.font-size{
+  font-size: 80%;
+}
+
+.texto-hover{
+  color: grey;
+  font-size: .8rem;
+}
+
+.texto-hover:hover{
+  color: #6524e4;
+}
+
+/* ::ng-deep .input-form{
+    margin-bottom: .2em !important;
+}
+::ng-deep .input-form .label{
+    font-size: 80% !important;
+}
+::ng-deep .input-form-checkbox-grupo .label, .input-form-checkbox .nome{
+    font-size: 80% !important;
+}
+::ng-deep .input-form-checkbox .nome{
+    font-size: 70% !important;
+} */
+/* ::ng-deep .input-form .input{
+    padding: .0em 1em !important;
+    font-size: 80% !important;
+} */
+/* ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix{
+  padding: .8em .2em !important;
+  font-size: 80% !important;
+}
+
+::ng-deep .input-form-checkbox .quadrado{
+    min-height: 15px !important;
+    min-width: 15px !important;
+} */

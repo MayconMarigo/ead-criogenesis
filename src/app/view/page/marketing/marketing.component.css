@@ -1,0 +1,82 @@
+::ng-deep .border-radius-textarea .mat-form-field-outline-start {
+  border-radius: 0px 0 0 0px !important;
+  min-width: 0px !important;
+}
+
+::ng-deep .border-radius-textarea .mat-form-field-outline-end {
+  border-radius: 0 0px 0px 0 !important;
+}
+
+.no-image{
+  border-radius: 0;
+}
+
+.teste:hover .option{
+  opacity: 10;
+}
+
+.option{
+  background-color: white;
+  opacity: 0;
+  z-index: 4;
+  color: gray;
+  border-radius: 10px;
+  position: absolute;
+  top:20px;
+  right: 30px;
+  border: 1px solid lightgray;
+
+  transition: all .5s ease;
+}
+
+.option-border-right{
+  border-right: 1px solid lightgray;
+}
+
+.option-icon{
+  padding: .25em .5em;
+  cursor: pointer;
+}
+
+.option-icon:hover{
+  color: rgb(158, 157, 157);
+}
+
+.curso-imagens{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.upload-image{
+  height: 100%;
+}
+
+.upload-image label{
+  padding: .7em 2em;
+  /* background-color: #3E00D3; */
+  height: 100%;
+  width: 100%;
+  color: #FFF;
+  text-align: center;
+  display: block;
+  /* margin-top: 10px; */
+  cursor: pointer;
+
+  border: none;
+
+  transition: all .25s ease;
+}
+
+.back-teste{
+  width: 50px;
+  height: 50px;
+  background-color: #3E00D3;
+  border-radius: 50%;
+}
+
+@media only screen and (max-width: 991px) {
+  .teste{
+    height: 150px;
+  }
+}

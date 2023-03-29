@@ -1,0 +1,34 @@
+<div class="flex flex-direction-column justify-content-between" style="height: 100%;">
+  <div>
+    <span class="titulo line-height-1">Declaração de Participação</span>
+    <table class="tabela">
+      <thead>
+        <tr>
+          <th scope="col" colspan="2" class="bold pl-3" style="text-align: start;">Cursos Concluídos</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let certificado of listaCertificados; let i = index">
+        <tr>
+          <td class="border-bottom">
+            <span class="texto-color">{{certificado.name}}</span>
+          </td>
+          <td class="border-bottom" style="width: 20%;">
+            <button class="btn botao-color-2" (click)="downloadArquivo(certificado.url, i+1)">EMITIR</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-5" style="font-weight: 500; font-size: 1rem; text-align: justify;">
+    <div class="mb-2">
+      <span>Para receber a Declaração de Participação do curso, é preciso passar por uma avaliação e após a aprovação no teste, você poderá baixar o certificado na própria plataforma.</span>
+    </div>
+    <div>
+      <span>Faça o seu cadastro e tenha acesso a todo o conteúdo de qualidade que só a Criogênesis tem a oferecer.</span>
+    </div>
+    <!-- <div>
+      <span>* Para aprovação do seu cadastro, recomenda-se enviar um anexo esclarecendo os motivos.</span>
+    </div> -->
+  </div>
+</div>

@@ -1,0 +1,22 @@
+.no-image{
+  min-height: 200px;
+}
+
+.card-curso {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 3em;
+}
+
+.card-curso .card-curso-imagem {
+  border-radius: 20px;
+  background-size: 100% auto;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+  width: 100%;
+  height: auto;
+}

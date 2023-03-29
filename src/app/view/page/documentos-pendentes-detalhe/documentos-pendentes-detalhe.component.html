@@ -1,0 +1,40 @@
+<span class="titulo">Aprovação de Documentos</span>
+<table class="tabela">
+  <thead>
+    <tr>
+      <th scope="col" colspan="3" class="bold">
+        <div class="container-fluid">
+          <div class="row align-items-center pl-4">
+            <div class="imagem mr-3">{{ 'Eduardo Costa' | doisCharacters}}</div>
+            <span class="texto-color">{{'Eduardo Costa'}}</span>
+          </div>
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="efeito-hover cursor" *ngFor="let documento of listaDocumentos;">
+      <td class="border-right border-bottom">
+        <div style="display: flex; flex-direction: row; align-items: center;">
+          <i class="fas fa-file-alt cursor-pointer" style="font-size: 1.5em; color: #c2bebe;"></i>
+          <span class="ml-3">{{documento.nome}}</span>
+        </div>
+      </td>
+      <td class="border-right border-bottom">
+        <div style="display: flex; justify-content: center;">
+          <span class="bold">{{documento.status}}</span>
+        </div>
+      </td>
+      <td class="border-bottom" style="width: 20%;">
+        <div class="row align-items-center justify-content-around">
+          <div class="icon vermelho mb-1" (click)="abrirJustificativa()">
+            <i class="fas fa-times"></i>
+          </div>
+          <div class="icon verde mb-1">
+            <i class="fas fa-check"></i>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

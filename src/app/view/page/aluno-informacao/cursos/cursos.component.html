@@ -1,0 +1,47 @@
+<span class="titulo">Meus Cursos</span>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 mb-3" *ngFor="let curso of meusCursos">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-4 mb-3 pointer" [routerLink]="'/curso/'+curso.id">
+            <img [src]="curso.image" height="auto" width="100%" class="mat-elevation-z4" (error)="curso.image = null">
+            <div class="no-image mat-elevation-z4" style="background-size: 100% 100%;" *ngIf="!curso.image">
+              <i class="fas fa-image no-image-icon"></i>
+            </div>
+          </div>
+          <div class="col-lg-8 mb-3 pointer" [routerLink]="'/curso/'+curso.id">
+            <div class="container-fluid" style="height: 100%;">
+              <div class="row justify-content-between" style="height: 100%;">
+                <div class="col-12">
+                  <span style="display: block; font-size: 1.5em; font-weight: bold;">
+                    {{curso.name}}
+                  </span>
+                  <span style="display: block; color: #3e00d3; font-weight: bold;" class="mb-2">
+                    {{'Carga horária: ' + converterParaHoraMinutos(curso.workload)}}
+                  </span>
+                  <span style="display: block;">
+                    {{curso.description}}
+                  </span>
+                </div>
+                <div class="col-12" *ngIf="curso.done == 1">
+                  <div class="flex justify-content-end align-items-end" style="height: 100%;">
+                    <img src="./././././assets/logo/crio-brasao.png" width="100px" height="auto">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-lg-5">
+            <pontuacao label="Como a informação foi fornecida" [readonly]="true" (change)="avaliarCurso($event)" [label-font-size]=".6" [star-font-size]="1" [margin-bottom]=".5" [height-px]="50"></pontuacao>
+            <pontuacao label="Qualidade do material apresentado" [readonly]="true" (change)="avaliarCurso($event)" [label-font-size]=".6" [star-font-size]="1" [margin-bottom]=".5" [height-px]="50"></pontuacao>
+            <pontuacao label="Grau de dificuldade" [readonly]="true" (change)="avaliarCurso($event)" [label-font-size]=".6" [star-font-size]="1" [margin-bottom]=".5" [height-px]="50"></pontuacao>
+            <pontuacao label="Duração do curso" [readonly]="true" (change)="avaliarCurso($event)" [label-font-size]=".6" [star-font-size]="1" [margin-bottom]=".5" [height-px]="50"></pontuacao>
+            <pontuacao label="Avaliação geral do curso" [readonly]="true" (change)="avaliarCurso($event)" [label-font-size]=".6" [star-font-size]="1" [height-px]="50"></pontuacao>
+          </div> -->
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>

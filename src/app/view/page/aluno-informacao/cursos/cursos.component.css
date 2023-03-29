@@ -1,0 +1,107 @@
+.corpo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.cursos-tela{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+
+    margin-bottom: 2em;
+}
+
+.cursos-tela-header{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    padding-top: 3em;
+    padding-bottom: 1.3em;
+    padding-left: 2em;
+}
+
+.cursos-tela-header .texto{
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #3E00D3;
+}
+
+
+.cursos-tela-conteudo{
+    background-color: #DCEFF9;
+
+    padding: 3em 2em;
+}
+
+
+/* Card */
+
+.card-curso{
+    width: 21%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 3em;
+}
+
+.card-curso-imagem{
+    /* background-color: #3E00D3; */
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    position: relative;
+    cursor: pointer;
+    height: 250px;
+    width: 100%;
+}
+
+/* .card-curso:hover .card-curso-imagem{
+    opacity: .7;
+}
+
+.card-curso:hover .card-curso-imagem::after{
+    content: "Acessar Curso";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1.25em 3em;
+    background-color: #3E00D3;
+    border-radius: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    opacity: 1;
+
+} */
+
+.card-curso .card-curso-conteudo{
+    display: flex;
+    flex-direction: column;
+
+    padding: 0 1em;
+}
+.card-curso-titulo{
+    font-weight: 500;
+    font-size: 1.25em;
+}
+.card-curso-descricao{
+    font-size: 1em;
+}
+
+.titulo{
+  display: block;
+  text-align: center;
+}
+
+.no-image{
+  min-height: 200px;
+}

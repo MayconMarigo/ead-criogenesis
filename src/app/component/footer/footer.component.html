@@ -1,0 +1,79 @@
+<div class="footer-up" *ngIf="footerUp">
+  <div class="contact no-visible-mobile">
+    <span class="contact-title">
+      0800-773-2166
+    </span>
+    <span class="contact-content">
+      Atendimento 24 Horas
+    </span>
+  </div>
+  <!-- <div class="divider"></div> -->
+  <div class="address no-visible-mobile">
+    <div class="icon">
+      <i class="fas fa-map-marker-alt"></i>
+    </div>
+    <div class="address-content">
+      <span>
+        Rua Américo Brasiliense, 1000
+      </span>
+      <span>
+        Chác. St. Antônio - SP - 04715-002
+      </span>
+    </div>
+  </div>
+  <!-- <div class="divider"></div> -->
+  <div class="medias">
+    <div class="media-social" (click)="irParaLink('https://www.facebook.com/Criogenesis')">
+      <div class="icon">
+        <i class="fab fa-facebook"></i>
+      </div>
+      <span style="margin: 0;">Criogenesis</span>
+    </div>
+    <div class="media-social mt-1" (click)="irParaLink('https://www.instagram.com/criogenesisbio/')">
+      <div class="icon">
+        <i class="fab fa-instagram"></i>
+      </div>
+      <span>criogenesisbio</span>
+    </div>
+  </div>
+  <div class="contact visible-mobile">
+    <span class="contact-title">
+      0800-773-2166
+    </span>
+    <span class="contact-content">
+      Atendimento 24 Horas
+    </span>
+  </div>
+  <div class="address visible-mobile">
+    <div class="icon">
+      <i class="fas fa-map-marker-alt"></i>
+    </div>
+    <div class="address-content">
+      <span>
+        Rua Américo Brasiliense, 1000
+      </span>
+      <span>
+        Chác. St. Antônio - SP - 04715-002
+      </span>
+    </div>
+  </div>
+</div>
+<div class="footer-bottom" [ngClass]="{
+    'footer-bottom-full': !footerUp
+}">
+  <div class="content">
+    <span>Criogênesis Todos os direitos reservados | &copy; 2020</span>
+  </div>
+  <!-- <div class="divider"></div> -->
+  <div class="content no-visible-mobile">
+    <span>CNPJ 07.796.165/0001-60</span>
+  </div>
+  <!-- <div class="divider"></div> -->
+  <div class="content no-visible-mobile">
+    <span>4UIT</span>
+  </div>
+  <div class="content visible-mobile" style="width: 100%;">
+    <div>CNPJ 07.796.165/0001-60</div>
+    <div>4UIT</div>
+  </div>
+</div>

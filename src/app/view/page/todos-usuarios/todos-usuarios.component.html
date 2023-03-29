@@ -1,0 +1,778 @@
+<div class="container">
+  <div class="row justify-content-between">
+    <span class="titulo">Todos os Usuários</span>
+    <div class="flex justify-content-end" style="flex: 1; gap: 25px">
+      <div class="select-container">
+        <select (change)="ordenarUsuariosPorClasse($event)">
+          <option value="0">Filtrar por</option>
+          <option value="2">Médicos</option>
+          <option value="1">Enfermeiros</option>
+          <option value="3">Dentistas</option>
+        </select>
+      </div>
+      <div class="row col-lg-4 col-12 input-container">
+        <i class="fa fa-search inside-icon"></i>
+        <input
+          class="users-header-input"
+          placeholder="Buscar nome"
+          (keyup)="filtrarUsuarios($event)"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<table class="tabela">
+  <thead>
+    <tr>
+      <th scope="col" class="bold" colspan="3">Usuários</th>
+    </tr>
+  </thead>
+  <tbody
+    *ngFor="
+      let usuario of listaUsuariosFiltrados.length > 0
+        ? listaUsuariosFiltrados
+        : listaUsuarios;
+      let i = index
+    "
+  >
+    <tr class="efeito-hover">
+      <td
+        class="border-right border-bottom pointer"
+        (click)="selecionarUsuario(i)"
+      >
+        <div class="row align-items-center">
+          <div class="imagem mr-3">{{ usuario.name | doisCharacters }}</div>
+          <span class="texto-color">{{ usuario.name }}</span>
+        </div>
+      </td>
+      <td style="width: 5%" class="border-bottom">
+        <i
+          class="fas fa-trash text-danger pointer"
+          (click)="deletarUsuario(usuario, i)"
+        ></i>
+      </td>
+    </tr>
+    <tr *ngIf="expandirUsuario(i)">
+      <td class="border-bottom" colspan="3">
+        <div class="container-fluid">
+          <div class="row testando">
+            <div class="col-lg-12 input-form">
+              <label class="label" for="nome">Nome:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.name"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'name',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 input-form">
+              <label class="label" for="rg">RG:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.rg"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'rg',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 input-form">
+              <label class="label" for="cpfCnpj">CPF / CNPJ:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.cpf | mask : 'CPF_CNPJ'"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'cpf',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 input-form">
+              <label class="label" for="dataNascimento"
+                >Data de Nascimento:</label
+              >
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="
+                    usuario.birthday
+                      ? usuario.birthday?.split('-').reverse().join('-')
+                      : ''
+                  "
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'birthday',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6 input-form">
+              <label class="label" for="cep">CEP:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.cep"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'cep',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6 input-form">
+              <label class="label" for="estado">Estado:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="formatarEstado(usuario.state)"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'state',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6 input-form">
+              <label class="label" for="endereco">Endereço:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.address"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'address',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-2 input-form">
+              <label class="label" for="numero">Número:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.number"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'number',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-2 input-form">
+              <label class="label" for="complement">Complemento:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.complement"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'complement',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6 input-form">
+              <label class="label" for="cidade">Cidade:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.city"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'city',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6 input-form">
+              <label class="label" for="bairro">Bairro:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.neighborhood"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'neighborhood',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-12 input-form">
+              <label class="label" for="email">E-mail:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="email"
+                  [value]="usuario.email"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'email',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-12 input-form">
+              <label class="label" for="email2">E-mail Alternativo:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="email"
+                  [value]="usuario.email2"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'email2',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6 input-form">
+              <label class="label" for="telefone">Telefone :</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.phone | mask : '(00) 00000-0000'"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'phone',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6 input-form">
+              <label class="label" for="telefone2"
+                >Telefone Alternativo :</label
+              >
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.phone2 | mask : '(00) 00000-0000'"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'phone2',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6 input-form">
+              <label class="label mb-2">Registro de Classe:</label>
+              <input-form-radio
+                style="height: 100%"
+                [radios]="[
+                  { name: 'COREN', value: 1 },
+                  { name: 'CRM', value: 2 },
+                  { name: 'CRO', value: 3 },
+                  { name: 'Criogênesis', value: 0 },
+                  { name: 'Outros', value: 4 }
+                ]"
+                [value]="usuario.registryType"
+                (change)="
+                  setNewUser(
+                    i,
+                    listaUsuariosFiltrados.length > 0
+                      ? listaUsuariosFiltrados[i]
+                      : listaUsuarios[i],
+                    'registryType',
+                    $event
+                  )
+                "
+              ></input-form-radio>
+            </div>
+            <div class="col-lg-6 input-form">
+              <label class="label" for="numeroRegistro">Número Registro:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.registry"
+                  (input)="
+                    setNewUser(
+                      i,
+                      listaUsuariosFiltrados.length > 0
+                        ? listaUsuariosFiltrados[i]
+                        : listaUsuarios[i],
+                      'registry',
+                      $event
+                    )
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-12 flex flex-direction-row align-items-baseline">
+              <label class="label mr-2"
+                >Informações sobre terapia celular:</label
+              >
+              <input-form-radio
+                style="height: 100%"
+                [disabled]="true"
+                [radios]="[{ name: '', value: 1 }]"
+                [value]="usuario.agree"
+              ></input-form-radio>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="expandirUsuario(i)">
+      <td class="border-bottom" colspan="3">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-6 input-form">
+              <label class="label">Nome Favorecido:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.payments?.name"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6 input-form">
+              <label class="label">CPF:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.payments?.cpf | mask : '000.000.000-00'"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 input-form">
+              <label class="label">Código Banco:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="formatarBankCodigo(usuario.payments?.bank)"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 input-form">
+              <label class="label">Agência:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.payments?.branch"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 input-form">
+              <label class="label">Conta:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="usuario.payments?.account"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6 input-form">
+              <label class="label">Tipo PIX:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="formatarPixType(usuario.payments?.pixType)"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6 input-form">
+              <label class="label">Código PIX:</label>
+              <mat-form-field appearance="outline">
+                <input
+                  disabled
+                  class="input"
+                  matInput
+                  type="text"
+                  [value]="
+                    usuario.payments?.pix
+                      | mask
+                        : (usuario.payments?.pixType == 0
+                            ? 'CPF_CNPJ'
+                            : usuario.payments?.pixType == 1
+                            ? '(00) 00000-0000'
+                            : 'A*')
+                  "
+                />
+              </mat-form-field>
+            </div>
+            <div
+              class="flex col-lg-12 flex-direction-column"
+              style="font-size: 0.8em"
+            >
+              <div class="flex justify-space-between">
+                <label class="label">Progresso dos Cursos</label>
+              </div>
+              <div *ngFor="let c of usuario.cursos">
+                <span>{{ c.name }}</span>
+                <div
+                  class="progress w-100"
+                  style="margin-top: 10px; height: 15px"
+                >
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    [ngStyle]="{ width: c.qnt ? c.qnt + '%' : 10 + '%' }"
+                  >
+                    <span style="color: #000">{{ c.qnt ? c.qnt : 0 }} %</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 15px" *ngIf="isAdmin">
+            <button
+              style="cursor: pointer; border-width: 1px"
+              (click)="updateUser()"
+            >
+              Salvar alterações
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="expandirUsuario(i)">
+      <td class="border-bottom" colspan="3">
+        <div class="container-fluid">
+          <table class="tabela text-sm-mobile">
+            <thead>
+              <tr>
+                <th scope="col" class="bold">Documentos</th>
+                <th scope="col" class="bold" colspan="2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let documento of usuario.documents">
+                <td
+                  class="border-right border-bottom"
+                  [ngClass]="{ pointer: !(documento.status == null) }"
+                  (click)="visualizarImagem(documento)"
+                >
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      align-items: center;
+                    "
+                  >
+                    <i
+                      class="fas fa-file-alt"
+                      style="font-size: 1.5em; color: #c2bebe"
+                    ></i>
+                    <span class="ml-3">{{ documento.name }}</span>
+                  </div>
+                </td>
+                <td
+                  class="border-right border-bottom"
+                  *ngIf="documento.status == '0'"
+                >
+                  <div style="display: flex; justify-content: center">
+                    <span class="bold text-warning">{{
+                      formartarStatus(documento.status)
+                    }}</span>
+                  </div>
+                </td>
+                <td
+                  class="border-right border-bottom"
+                  colspan="3"
+                  *ngIf="documento.status != '0'"
+                >
+                  <div style="display: flex; justify-content: center">
+                    <span
+                      class="bold"
+                      [ngClass]="{
+                        'text-success': documento.status == '1',
+                        'text-danger': documento.status == '2'
+                      }"
+                      >{{ formartarStatus(documento.status) }}</span
+                    >
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="usuario.documents?.length == 0">
+                <td colspan="4" class="border-bottom">
+                  <span>Não há documentos pendentes</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin: 15px 0" *ngIf="isAdmin">
+            <button
+              style="cursor: pointer; border-width: 1px"
+              (click)="showDocs()"
+            >
+              Adicionar Documentos
+            </button>
+          </div>
+          <table class="tabela" style="width: 100%" *ngIf="docs">
+            <thead>
+              <tr>
+                <th scope="col" class="bold">Documento</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let documento of documentos; let j = index">
+              <tr
+                class="efeito-hover"
+                (click)="selecionarDocumentoReprovado(documento, j)"
+                [ngClass]="{
+                  pointer:
+                    (documento.status == '2' || documento.status == null) &&
+                    !documento.bloquear
+                }"
+              >
+                <td class="border-right border-bottom">
+                  <span class="texto-underline texto-color">{{
+                    documento.name
+                  }}</span>
+                </td>
+              </tr>
+              <tr *ngIf="expandirDocumento(j) && documento.status == '2'">
+                <td colspan="2" class="border-bottom">
+                  <div class="descricao">
+                    <span class="texto-color">{{ documento.error }}</span>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="expandirDocumento(j)">
+                <td colspan="2" class="border-bottom">
+                  <div
+                    class="icon-fechar"
+                    (click)="resetarDocumentoExpandido(j)"
+                  >
+                    <i class="fas fa-times"></i>
+                  </div>
+                  <div class="input">
+                    <span class="label mr-2">{{ documento.name }}</span
+                    ><span class="label-extra"
+                      >O arquivo deve ser no formato PDF, PNG ou JPG</span
+                    >
+                    <div class="upload">
+                      <span class="text-truncate">{{
+                        formatarArquivoNome(
+                          documento.arquivoNome,
+                          documento.extensao
+                        )
+                      }}</span>
+                      <label class="text-truncate" [for]="documento.id"
+                        >Fazer Upload</label
+                      >
+                    </div>
+                    <input
+                      type="file"
+                      [name]="documento.id"
+                      [id]="documento.id"
+                      (change)="gerenciarFileInput($event.target, documento)"
+                    />
+                  </div>
+                  <span
+                    style="color: red"
+                    *ngIf="documento.name == 'ALVARÁ DE FUNCIONAMENTO (ANVISA)'"
+                    >*Esse documento é somente necessário para os
+                    dentistas</span
+                  >
+                  <div
+                    class="flex flex-direction-row justify-content-center mt-5"
+                    *ngIf="documento.status == '2'"
+                  >
+                    <img
+                      src="./././assets/login/pessoas-ead.svg"
+                      height="200px"
+                      width="auto"
+                      class="no-visible-mobile"
+                    />
+                    <div class="flex flex-direction-column">
+                      <span class="conteudo-texto">Falta Pouco...</span>
+                      <span class="conteudo-texto-complementar"
+                        >Regularize seu cadastro conosco!</span
+                      >
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="expandirDocumento(j)" class="border-bottom">
+                <td colspan="2" class="p-2">
+                  <div class="flex flex-direction-row justify-content-end">
+                    <button
+                      class="btn botao-color-2"
+                      (click)="
+                        uploadDocumento(
+                          documento,
+                          j,
+                          listaUsuariosFiltrados.length > 0
+                            ? listaUsuariosFiltrados[i].id
+                            : listaUsuarios[i].id
+                        )
+                      "
+                      [disabled]="isLoading(j) || !documento.arquivo"
+                    >
+                      <mat-spinner
+                        [diameter]="20"
+                        *ngIf="isLoading(j)"
+                      ></mat-spinner>
+                      <span *ngIf="!isLoading(j)">Enviar documento</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

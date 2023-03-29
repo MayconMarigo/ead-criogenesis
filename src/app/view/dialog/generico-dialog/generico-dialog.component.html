@@ -1,0 +1,13 @@
+<h2 class="centralizar-mobile">{{titulo}}</h2>
+<hr>
+<p class="centralizar-mobile">{{descricao}}</p>
+<div class="container-fluid">
+  <div class="row justify-content-between" [ngClass]="{'justify-content-between': !justBtnClose, 'justify-content-end':justBtnClose}">
+    <div class="col-sm-4" *ngIf="!justBtnClose">
+      <button class="btn btn-block botao-color" [matDialogClose]="true">Confirmar</button>
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-block btn-danger" [matDialogClose]="false">Fechar</button>
+    </div>
+  </div>
+</div>

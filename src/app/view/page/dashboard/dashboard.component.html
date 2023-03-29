@@ -1,0 +1,244 @@
+<div class="container-fluid" style="display: flex; flex-direction: column">
+  <span class="titulo" style="text-align: center">Dashboard</span>
+  <span><b>Attendance</b></span>
+  <div>
+    <span>Dashboard /</span>
+    <span>Attendance</span>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 mb-3">
+      <div class="dashboard-card" style="height: 100%">
+        <span class="dashboard-titulo">Cadastros</span>
+        <div class="chart">
+          <canvas
+            baseChart
+            [data]="pieChartData1"
+            [type]="pieChartType"
+            [options]="pieChartOptions"
+            [plugins]="pieChartPlugins"
+          >
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-lg-6 mb-3">
+      <div class="dashboard-card" style="height: 100%;">
+        <span class="dashboard-titulo">Estatística geral dos Cursos</span>
+        <div class="dashboard-card mt-2 mb-3">
+          <div class="flex justify-content-between" style="font-size: .8em">
+            <span>Cursos Finalizados</span>
+            <span>{{progressStats.ended + ' / ' + progressStats.total}}</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" [style]="'width: '+(progressStats.ended / progressStats.total) * 100+'%'"  aria-valuemin="0"
+              aria-valuemax="100"></div>
+          </div>
+        </div>
+        <div class="dashboard-card mb-3">
+          <div class="flex justify-content-between" style="font-size: .8em">
+            <span>Cursos em Andamento</span>
+            <span>{{progressStats.running + ' / ' + progressStats.total}}</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-crio-danger" role="progressbar" [style]="'width: '+(progressStats.running / progressStats.total) * 100+'%'" aria-valuenow="30"
+              aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+        <div class="dashboard-card">
+          <div class="flex justify-content-between" style="font-size: .8em">
+            <span>Cursos Inativos</span>
+            <span>{{progressStats.waiting + ' / ' + progressStats.total}}</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-crio-warning" role="progressbar" [style]="'width: '+(progressStats.waiting / progressStats.total) * 100+'%'" aria-valuenow="30"
+              aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="col-lg-6 mb-3">
+      <div class="dashboard-card" style="height: 100%">
+        <span class="dashboard-titulo">Avaliação dos Cursos</span>
+        <div style="display: block" class="mt-3">
+          <canvas
+            baseChart
+            [data]="pieChartData2"
+            [type]="pieChartType"
+            [options]="pieChartOptions2"
+            [plugins]="pieChartPlugins"
+          >
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-lg-6 mb-3">
+      <div class="container-fluid" style="height: 100%">
+        <div class="row" style="height: 100%">
+          <div class="col-12 mb-3 p-0">
+            <div class="dashboard-card" style="height: 100%">
+              <span class="dashboard-titulo">Novos Cadastros Pendentes</span>
+              <div
+                class="flex flex-direction-row align-items-center mt-3 pointer"
+                *ngFor="let cadastro of cadastros"
+                routerLink="/admin/pendente/usuario"
+              >
+                <div style="position: relative">
+                  <div
+                    style="
+                      height: 15px;
+                      width: 15px;
+                      border-radius: 50%;
+                      border: 3px solid #84e0be;
+                    "
+                  ></div>
+                </div>
+                <div class="flex flex-direction-column ml-3">
+                  <span style="font-size: 1em; font-weight: bold"
+                    >{{ cadastro.name }} - {{ cadastro.type }}</span
+                  >
+                  <span style="font-size: 1em; color: lightgray"
+                    ><i class="far fa-clock"></i> {{ cadastro.creation }}.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 p-0">
+            <div class="dashboard-card" style="height: 100%">
+              <span class="dashboard-titulo">Novos Aprovações Pendentes</span>
+              <div
+                class="flex flex-direction-row align-items-center mt-3 pointer"
+                *ngFor="let pendente of pendentes"
+                routerLink="/admin/pendente/documento"
+              >
+                <div style="position: relative">
+                  <div
+                    style="
+                      height: 15px;
+                      width: 15px;
+                      border-radius: 50%;
+                      border: 3px solid #84e0be;
+                    "
+                  ></div>
+                </div>
+                <div class="flex flex-direction-column ml-3">
+                  <span style="font-size: 1em; font-weight: bold"
+                    >{{ pendente.name }} - {{ pendente.type }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  <div style="width: 100%; margin-left: 0px; gap: 30px" class="row responsive">
+    <div class="dashboard-2ndrow" (click)="showRegister('cad')">
+      <span class="dashboard-titulo">Novos Cadastros</span>
+      <div id="cadastros" class="dashboard-2ndrow-text" style="border: none">
+        <h1>{{ cadastros.length }}</h1>
+      </div>
+    </div>
+    <div class="dashboard-2ndrow" style="flex: 2.5">
+      <span class="dashboard-titulo" style="margin-bottom: 10px"
+        >Estatística geral dos cursos</span
+      >
+      <div style="display: flex; flex: 1; gap: 20px">
+        <div class="dashboard-2ndrow-text" (click)="showRegister('done')">
+          <span class="dashboard-titulo" style="font-size: 12px"
+            >Cursos finalizados</span
+          >
+          <h1>{{ cursosFinalizados.length }}</h1>
+        </div>
+        <div class="dashboard-2ndrow-text" (click)="showRegister('onGoing')">
+          <span class="dashboard-titulo" style="font-size: 12px"
+            >Cursos em andamento</span
+          >
+          <h1>{{ cursosEmAndamento.length }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showTable && showType == 'cad'">
+    <div class="my-4 w-100 p-2 px-4" style="background-color: #f2f6ff">
+      <span>Novos Cadastros</span>
+    </div>
+    <table style="width: 100%">
+      <thead>
+        <tr>
+          <th style="width: 40%; text-align: center">Nome</th>
+          <th style="width: 20%; text-align: center">Tipo</th>
+          <th style="width: 40%; text-align: center">Data de criação</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let c of cadastros; let i = index">
+        <tr>
+          <td style="width: 40%; text-align: center">
+            {{ c.name }}
+          </td>
+          <td style="width: 20%; text-align: center">
+            {{ c.type }}
+          </td>
+          <td style="width: 40%; text-align: center">
+            {{ c.creation.split(" ")[0].split("-").reverse().join("-") }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="showTable && showType == 'done'">
+    <div class="my-4 w-100 p-2 px-4" style="background-color: #f2f6ff">
+      <span>Cursos Finalizados</span>
+    </div>
+    <table style="width: 100%">
+      <thead>
+        <tr>
+          <th style="width: 40%; text-align: center">Nome</th>
+          <th style="width: 20%; text-align: center">Status</th>
+          <th style="width: 40%; text-align: center">Curso</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let c of cursosFinalizados; let i = index">
+        <tr>
+          <td style="width: 40%; text-align: center">
+            {{ c.user.toUpperCase() }}
+          </td>
+          <td style="width: 20%; text-align: center">
+            {{ c.status }}
+          </td>
+          <td style="width: 40%; text-align: center">
+            {{ c.course }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="showTable && showType == 'onGoing'">
+    <div class="my-4 w-100 p-2 px-4" style="background-color: #f2f6ff">
+      <span>Cursos Em Andamento</span>
+    </div>
+    <table style="width: 100%">
+      <thead>
+        <tr>
+          <th style="width: 40%; text-align: center">Nome</th>
+          <th style="width: 20%; text-align: center">Status</th>
+          <th style="width: 40%; text-align: center">Curso</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let c of cursosEmAndamento; let i = index">
+        <tr>
+          <td style="width: 40%; text-align: center">
+            {{ c.user.toUpperCase() }}
+          </td>
+          <td style="width: 20%; text-align: center">
+            {{ c.status }}
+          </td>
+          <td style="width: 40%; text-align: center">
+            {{ c.course }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

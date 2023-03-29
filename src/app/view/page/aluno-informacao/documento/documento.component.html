@@ -1,0 +1,132 @@
+<span class="titulo">Documentos</span>
+
+<table class="tabela" style="width: 100%">
+  <thead>
+    <tr>
+      <th scope="col" class="bold">Documento</th>
+      <!-- <th scope="col" class="bold">Documentos</th> -->
+      <th scope="col" class="bold">Status</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let documento of documentos; let i = index">
+    <tr
+      class="efeito-hover"
+      (click)="selecionarDocumentoReprovado(documento, i)"
+      [ngClass]="{
+        pointer:
+          (documento.status == '2' || documento.status == null) &&
+          !documento.bloquear
+      }"
+    >
+      <td class="border-right border-bottom">
+        <span class="texto-underline texto-color">{{ documento.name }}</span>
+      </td>
+      <!-- <td class="border-bottom"><span class="bold">{{formatarArquivoNome(documento.nome, documento.extensao)}}</span>
+      </td> -->
+      <td class="border-left border-bottom">
+        <i
+          *ngIf="documento.status != null"
+          [ngClass]="{
+            'text-success': documento.status == '1',
+            'text-warning': documento.status == '0',
+            'text-danger': documento.status == '2'
+          }"
+          [class]="'fas fa-' + iconStatus(documento.status)"
+          class="mr-1"
+        ></i>
+        <span class="bold">{{ textoStatus(documento.status) }}</span>
+      </td>
+    </tr>
+    <!-- <tr *ngIf="expandirDocumento(i)" class="efeito-hover pointer" (click)="resetarDocumentoExpandido()">
+      <td class="border-right border-bottom"><span
+          class="texto-underline texto-color">{{documentoExpandido.name}}</span></td>
+      <td class="border-bottom"><span class="bold">{{formatarArquivoNome(documentoExpandido.nome,
+          documentoExpandido.extensao)}}</span></td>
+      <td class="border-left border-bottom">
+        <i *ngIf="documentoExpandido.status != null"
+          [ngClass]="{'text-success': documentoExpandido.status == '1', 'text-warning': documentoExpandido.status == '0', 'text-danger': documentoExpandido.status == '2'}"
+          [class]="'fas fa-'+iconStatus(documentoExpandido.status)" class="mr-1"></i>
+        <span class="bold">{{textoStatus(documentoExpandido.status)}}</span>
+      </td>
+    </tr> -->
+    <tr *ngIf="expandirDocumento(i) && documento.status == '2'">
+      <td colspan="2" class="border-bottom">
+        <div class="descricao">
+          <span class="texto-color">{{ documento.error }}</span>
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="expandirDocumento(i)">
+      <td colspan="2" class="border-bottom">
+        <div class="icon-fechar" (click)="resetarDocumentoExpandido(i)">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="input">
+          <span class="label mr-2">{{ documento.name }}</span
+          ><span class="label-extra"
+            >O arquivo deve ser no formato PDF, PNG ou JPG</span
+          >
+          <div class="upload">
+            <span class="text-truncate">{{
+              formatarArquivoNome(documento.arquivoNome, documento.extensao)
+            }}</span>
+            <label class="text-truncate" [for]="documento.id"
+              >Fazer Upload</label
+            >
+          </div>
+          <input
+            type="file"
+            [name]="documento.id"
+            [id]="documento.id"
+            (change)="gerenciarFileInput($event.target, documento)"
+          />
+        </div>
+        <span
+          style="color: red"
+          *ngIf="documento.name == 'ALVARÁ DE FUNCIONAMENTO (ANVISA)'"
+          >*Esse documento é somente necessário para os dentistas</span
+        >
+        <div
+          class="flex flex-direction-row justify-content-center mt-5"
+          *ngIf="documento.status == '2'"
+        >
+          <img
+            src="./././assets/login/pessoas-ead.svg"
+            height="200px"
+            width="auto"
+            class="no-visible-mobile"
+          />
+          <div class="flex flex-direction-column">
+            <span class="conteudo-texto">Falta Pouco...</span>
+            <span class="conteudo-texto-complementar"
+              >Regularize seu cadastro conosco!</span
+            >
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="expandirDocumento(i)" class="border-bottom">
+      <td colspan="2" class="p-2">
+        <div class="flex flex-direction-row justify-content-end">
+          <button
+            class="btn botao-color-2"
+            (click)="uploadDocumento(documento, i)"
+            [disabled]="isLoading(i) || !documento.arquivo"
+          >
+            <mat-spinner [diameter]="20" *ngIf="isLoading(i)"></mat-spinner>
+            <span *ngIf="!isLoading(i)">Enviar documento</span>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- <div class="mt-3" style="border: 2px solid #6524e4; padding: 1.5em 3em; color: #6524e4; font-weight: 500; font-size: 1rem;">
+  <div>
+    <span>* Em caso de ausência de documentos, é indispensável o envio de uma justificativa.</span>
+  </div>
+  <div>
+    <span>* Para aprovação do seu cadastro, recomenda-se enviar um anexo esclarecendo os motivos.</span>
+  </div>
+</div> -->

@@ -1,0 +1,6 @@
+<div class="input-form-checkbox">
+  <div class="quadrado" [ngClass]="{'quadrado-toggle':valor}" [ngStyle]="{'border-color': !valor && submitted ? 'red' : null}" (click)="selecionar()">
+    <i class="fas fa-check icon" *ngIf="valor"></i>
+  </div>
+  <div class="nome" [ngClass]="{'text-danger': !valor && submitted}">{{nome}}</div>
+</div>

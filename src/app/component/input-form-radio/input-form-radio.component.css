@@ -1,0 +1,36 @@
+.input-form-radio{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-form-radio .quadrado{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 15px;
+  min-width: 15px;
+
+  font-size: 0.6rem;
+  color: white;
+
+  border: 1px solid grey;
+  border-radius: 5px;
+
+  transition: all .1s ease-in;
+}
+
+
+.input-form-radio .quadrado-toggle{
+  /* background-color: #6c28f3; */
+  color: #6c28f3;
+  border-color: #6c28f3;
+}
+
+.input-form-radio .nome{
+  color: grey;
+  font-size: .9em;
+  margin: 0 .5em;
+}

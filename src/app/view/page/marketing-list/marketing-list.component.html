@@ -1,0 +1,40 @@
+<div class="container-fluid" style="display: flex; flex-direction: column;">
+  <span class="titulo" style="text-align: center;">Marketing</span>
+  <div class="row">
+    <div class="col-12 mb-5" *ngFor="let marketing of marketings; let i = index">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-4">
+            <img [src]="marketing.image" class="mb-3" style="width: 100%;" *ngIf="marketing.image"
+              (error)="marketing.image = undefined">
+            <div style="border: 1px solid lightgrey; height: 200px; width: 100%;" *ngIf="!marketing.image"
+              class="no-image mb-3">
+              <i class="fas fa-image no-image-icon"></i>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="titulo" style="overflow-wrap: anywhere;">{{marketing.title}}</div>
+            <p style="overflow-wrap: anywhere;">
+              {{marketing.text}}
+            </p>
+          </div>
+          <div class="col-12">
+            <div class="flex flex-direction-row justify-content-end">
+              <div class="option-icon mr-3" *ngIf="!isAdmin || isRotaAluno" (click)="downloadImg(marketing)">
+                <i class="fas fa-image"></i>
+              </div>
+              <div class="option-icon" (click)="copiarInput(marketing.title, marketing.text)"
+                [ngClass]="{'mr-3': isAdmin && !isRotaAluno}">
+                <i class="fas fa-share"></i>
+              </div>
+              <button class="btn botao-color-2 mr-3" *ngIf="isAdmin && !isRotaAluno"
+                (click)="editar(marketing.id)">Editar</button>
+              <button class="btn btn-danger" *ngIf="isAdmin && !isRotaAluno"
+                (click)="excluir(marketing.id)">Excluir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
